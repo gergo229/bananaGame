@@ -2,7 +2,7 @@
  *	Header for input handling of banana game
  */
 
-#ifndef INPUT_HANLER_H_
+#ifndef INPUT_HANDLER_H_
 #define INPUT_HANDLER_H_
 
 /// Includes
@@ -23,6 +23,12 @@
 		enum ButtonIsPressed buttonState;	//state of the button
 		TouchSliderValue touchSliderState;	//state of the touch slider
 	};
+		// Default/initilazation value of the AllPorcessedInputs struct
+		#define ALL_PROCESSED_INPUTS_DEFAULT { \
+			.joystickPosition = JOYSTICK_DEFAULT, \
+			.buttonState = NOTPRESSED, \
+			.touchSliderState = 0 \
+		};
 
 	// Stores IT flags of inputs, to show changes from ITs
 	struct InputITFlags {

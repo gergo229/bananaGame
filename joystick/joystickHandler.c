@@ -18,7 +18,7 @@
 
 	// The pin's location, on which data is received from the joystick
 		const GPIO_Port_TypeDef JOYSTICK_DATAIN_GPIO_PORT = gpioPortD;
-		const unsigned int JOYSTICK_DATAIN_GPIO_PIN = 1;
+		const unsigned int JOYSTICK_DATAIN_GPIO_PIN = 2;
 		//(PD2 is pin 8 on Expansion Header)
 	//(the 2 pins are set to even pins, to have the same IT route for them)
 
@@ -31,6 +31,9 @@
 	// (this function is called, if an IT showed, that the joystick input is changed)
 	JoystickPosition readAndCalculateNewJoystickPosition(void) {
 
+		//unset the IT's showing flag
+		inputITFlags.isJoystickChanged = 0;
+
 		//check, if the joystick is active (activity pin is in active state)
 		if (GPIO_PinInGet(JOYSTICK_ACTIVITY_GPIO_PORT, JOYSTICK_ACTIVITY_GPIO_PIN) == JOYSTICK_ACTIVE) {
 
@@ -42,9 +45,6 @@
 		}
 		else 	//if the joystick is not active
 			return JOYSTICK_DEFAULT;
-
-		//unset the IT's showing flag
-		inputITFlags.isJoystickChanged = 0;
 	}
 
 	// Configure the GPIO ports, used by the joystick input
@@ -64,10 +64,16 @@
 	// (both of them are connected to even pins)
 	void GPIO_EVEN_IRQHandler(void) {
 
+		// Context saving is done automatically
+
 		// Only the joystick input pins' ITs are enables,
 		// so it's sure, that it gave it.
 
 		// So then, set the IT flag for joystick
 		inputITFlags.isJoystickChanged = 1;
+
+		// Clear the EXT IT flag of the GPIO
+		uint32_t clearFlag = (1 << JOYSTICK_DATAIN_GPIO_PIN) | (1 << JOYSTICK_ACTIVITY_GPIO_PIN);	//clear both srouces' bits
+		GPIO_IntClear(clearFlag);
 	}
 

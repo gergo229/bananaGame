@@ -9,9 +9,12 @@
 	// Input specific headers
 		#include "segmentlcd.h"		//header for LCD
 		#include "../touch_slider/touch.h"	//header for touch slider
+		#include "../joystick/joystickHandler.h"	//header for the joystick input
+
+	// EmLib header
 		#include "em_cmu.h"
-	#include "em_gpio.h"
-#include "../joystick/joystickHandler.h"	//header for the joystick input
+		#include "em_gpio.h"
+		#include "em_device.h"
 
 /// Defines
 	#define SYSTICKDIVIDER 1000 //clock divider for system timer time
@@ -24,7 +27,7 @@
 ///Main functions
 
 	// Configure all used peripherals of the project
-	int configAll() {
+	void configAll() {
 
 		// Configure the eternal GPIO periphery
 		configGPIO();
@@ -36,7 +39,8 @@
 		configTouchSlider();
 		SysTick_Config(SystemCoreClock/SYSTICKDIVIDER);		//configure the system timer
 
-		return 0;
+		//Enable global ITs
+		 NVIC_EnableIRQ(GPIO_EVEN_IRQn);
 	}
 
 /// Utility functions' definitions
