@@ -7,9 +7,9 @@
 	#include "../../../joystickPosition.h"	//an external header, containing joystick's data
 
 	// Input specific handlers
-		#include "joystick_handling.h"		//joystick handling functions
-		#include "button_handling.h"		//button handling functions
-		#include "touch_slider_handling.h"		//touch slider handling functions
+		#include "../button/buttonHandler.h"		//button handling functions
+		#include "../joystick/joystickHandler.h"		//joystick handling functions
+		#include "../touch_slider/touchSliderHandler.h"		//touch slider handling functions
 
 /// Global variables
 	extern struct InputITFlags inputITFlags;		//a global flag structure, which signs, if a change occurred in inputs

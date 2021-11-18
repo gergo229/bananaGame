@@ -34,6 +34,6 @@
 /// Functions
 
 	// Checks, if a change occurred recently and process it if needed
-	void checkInputsAndProcess(struct AllProcesssedInputs* allProcessedInputs_p);
+	void checkInputsAndProcess(struct AllProcessedInputs* allProcessedInputs_p);
 
 #endif /* INPUT_HANDLER_H_ */
