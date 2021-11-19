@@ -52,8 +52,9 @@
 		// Initialize the LCD
 		SegmentLCD_Init(false);		//configure the LCD
 
-		//Enable global ITs
+		//Enable used ITs
 		 NVIC_EnableIRQ(GPIO_EVEN_IRQn);
+		 NVIC_EnableIRQ(GPIO_ODD_IRQn);
 	}
 
 /// Utility functions' definitions

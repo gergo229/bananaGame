@@ -7,14 +7,18 @@
 	#include "em_gpio.h"		//for handling GPIO with EmLib
 	#include <stdbool.h>		//for boolean type
 	#include "../input_handler/inputHandler.h"	//general input handler (contains the inputITFlags type)
+	#include <stdint.h>		//for precise (bit sized) integer types
 
 /// Constants
 
 	// Defining the button's GPIO pin
 		const GPIO_Port_TypeDef BUTTON_GPIO_PORT = gpioPortB;	//on port B
-		const unsigned int BUTTON_GPIO_PIN  = 9;		//on pin 9
+		const uint32_t BUTTON_GPIO_PIN  = 9;		//on pin 9
 		//PB9 is connected to UIF_PB0 on STK3700 board (with pull-up resistor)
 		//and it's grouped to odd IT group
+
+/// Global variables
+	extern struct InputITFlags inputITFlags;	//global structure, to indicate changes in input states
 
 /// Main functions
 
@@ -51,5 +55,5 @@
 		inputITFlags.isButtonChanged = true;
 
 		// Clear the EXT IT flag
-		GPIO_IntClear(BUTTON_GPIO_PIN);		//flags are grouped from pins
+		GPIO_IntClear(1 << BUTTON_GPIO_PIN);		//flags are grouped from pins
 	}
