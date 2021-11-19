@@ -13,8 +13,8 @@ struct DisplayData{
 		_isActive_;
 		uint8_t bananaTreePosition;
 		uint8_t bananaPosition;
-		uint8_t bucketPositionPlayer1;
-		uint8_t bucketPositionPlayer2;
+		uint8_t lowerBucketPosition;
+		uint8_t upperBucketPosition;
 	} gamePlay;
 	struct Points {
 		_isActive_;
@@ -27,4 +27,4 @@ struct DisplayData{
 	} text;
 };
 
-void displayData(struct DisplayData* displayData);
+void displayData(const struct DisplayData* const displayData);
