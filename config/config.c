@@ -1,63 +1,71 @@
-// Configuration file for banana_cooperative_multiplayer_game
+/*
+*	Configuration source file for banana game's program
+*/
 
-// Includes
+/// Includes
 
-	//Own header
-	#include "config.h"
+	#include "config.h"	 //own header
 
-	//Headers for LCD
-	#include "segmentlcd.h"
+	// Input specific headers
 
-	//EM headers
-	#include "em_cmu.h"
-	#include "em_usart.h"
-	#include "em_gpio.h"
+		// EmLib headers
+			#include "em_cmu.h"
+			#include "em_gpio.h"
+			#include "em_device.h"
 
-	//Touch slider's header
-	#include "../touch_slider/touch.h"
+		// Peripheral specific headers
+			#include "segmentlcd.h"		//header for LCD
+			#include "../input/joystick/joystickHandler.h"	//header for the joystick input
+			#include "../input/touch_slider/touch.h"	//header for touch slider input
+			#include "../input/button/buttonHandler.h"	//header for the button input
 
-// Defines
-#define SYSTICKDIVIDER 1000 //clock divider for system timer time
+/// Defines
+	#define SYSTICKDIVIDER 1000 //clock divider for system timer time
 
-// Configure the GPIO peripheral
-void configGpio() {
+/// Utility functions' declarations
 
-	// Add clock signal
-	CMU_ClockEnable(cmuClock_GPIO, true);
-}
+	void configGPIO(void);	//configure the GPIO peripheral
+	void configTouchSlider(void);	//configure the touch slider
 
-// Configure the UART peripheral
-// UART1 is connected to Expansion Headers,
-// that is used.
-void configUART() {
+///Main functions
 
-	// Add clock signaL
-	CMU_ClockEnable(cmuClock_UART1, true);
+	// Configure all used peripherals of the project
+	void configAll() {
 
-	// Set the parameters of the UART communication (with defaults)
-	USART_InitAsync_TypeDef UART1_init = USART_INITASYNC_DEFAULT;
-	USART_InitAsync(UART1, &UART1_init);
+		// Configure the eternal GPIO periphery
+		configGPIO();
 
-	// Configure the UART1 RX pin
-	// locate it to PD1, to the ExpansionHeader pin 6 (top row, 3rd from bottom)
-	GPIO_PinModeSet(gpioPortD, 1, gpioModeInput, 0);	//0: with no glitch filtering
-	UART1->ROUTE |= UART_ROUTE_LOCATION_LOC1;	//set the RX pin to Location 1 (so PD1)
-	UART1->ROUTE |= UART_ROUTE_RXPEN;		//enable the RX port
-}
+		// Configure the GPIO ports, used by the joystick input
+		configJoystickGPIO();
 
-// Configure the touch slider
-void configTouchSlider(void) {
-	Touch_Init();
-}
+		// Configure the GPIO ports, used by the button input
+		configButtonGPIO();
 
-// Configure all used peripherals of the project
-int configAll() {
+		// Configure the System Timer (used to periodically start events)
+		SysTick_Config(SystemCoreClock/SYSTICKDIVIDER);		//configure the system timer
 
-	configGpio();
-	configUART();
-	SegmentLCD_Init(false);		//configure the LCD
-	configTouchSlider();
-	SysTick_Config(SystemCoreClock/SYSTICKDIVIDER);		//configure the system timer
+		// Configure the touch slider
+		// (its GPIO ports, ACD for reading and Timer to read it)
+		// (after system timer's configuration, it uses that)
+		configTouchSlider();
 
-	return 0;
-}
+		// Initialize the LCD
+		SegmentLCD_Init(false);		//configure the LCD
+
+		//Enable used ITs
+		 NVIC_EnableIRQ(GPIO_EVEN_IRQn);
+		 NVIC_EnableIRQ(GPIO_ODD_IRQn);
+	}
+
+/// Utility functions' definitions
+	// Configure the GPIO peripheral
+	void configGPIO(void) {
+
+		// Add clock signal to it
+		CMU_ClockEnable(cmuClock_GPIO, true);
+	}
+
+	// Configure the touch slider
+	inline void configTouchSlider(void) {
+		Touch_Init();
+	}
