@@ -1,22 +1,26 @@
 /*
- *  Source file for BananaGameStateMachine C class
+ *  Source file for BananaGameStateMachine
  *  (implements its member functions)
  */
 
 /// Includes
     // Own header
-    #include "banana_game_state_machine.h"
+    #include "bananaGameStateMachine.h"
 
     // State specific headers
         #include "setup_state.h"
         #include "game_state.h"
         #include "finish_state.h"
+    
+    // In-out data headers
+        #include "../../display_data/displayData.h"    //the output data (this will be displayed later)
+        #include "../../input/inputHandler.h"      //the input data (this comes from physical inputs)
 
 /// Main functions
 
     // Functions of BananaGameStateMachine
         // Constructor of the BananaGameStateMachine
-        void BananaGameStateMachine_construct(struct BananaGameStateMachine* newBananaGameStateMachine_p) {
+        void BananaGameStateMachine_construct(struct BananaGameStateMachine* const newBananaGameStateMachine_p) {
             
             // Set the initial state
             newBananaGameStateMachine_p->actualState = SETUP;            //the initial state is Setup
@@ -38,7 +42,7 @@
         }
 
         // Destructor of the BananaGameStateMachine
-        void BananaGameStateMachine_destruct(struct BananaGameStateMachine* oldBananaGameStateMachine_p) {
+        void BananaGameStateMachine_destruct(struct BananaGameStateMachine* const oldBananaGameStateMachine_p) {
             
             // Free states' data's memory space
             free(oldBananaGameStateMachine_p->states[SETUP].data);
@@ -50,12 +54,14 @@
         void BananaGameStateMachine_switchState(struct BananaGameStateMachine* actualBananaGameStateMachine_p) {
             
             // Call the actual state' state switching function
-            actualBananaGameStateMachine_p->states[actualBananaGameStateMachine_p->actualState].newState();
+                enum BananaGameStateMachine_StateName actualState = actualBananaGameStateMachine_p->actualState;
+                actualBananaGameStateMachine_p->states[actualState].newState();
         }
 
         // Acting function of BananaGameStateMachine
         void BananaGameStateMachine_act(struct BananaGameStateMachine* actualBananaGameStateMachine_p) {
             
             //Call the actual state's action function
-            actualBananaGameStateMachine_p->states[actualBananaGameStateMachine_p->actualState].action();
+                enum BananaGameStateMachine_StateName actualState = actualBananaGameStateMachine_p->actualState;   
+                actualBananaGameStateMachine_p->states[actualState].action();
         }
