@@ -4,11 +4,10 @@
 
 /// Includes
 	#include "joystickHandler.h"	//own header
-
 	#include "../../../../joystickPosition.h"	//an external header, containing joystick's data
 	#include "em_gpio.h"	//for abstract GPIO handling
-	
-#include "../input_handler/inputHandler.h"		//for the IT flag structure
+	#include <stdbool.h>	//for boolean type
+	#include "../input_handler/inputHandler.h"		//for the IT flag structure
 
 /// Constants
 
@@ -33,7 +32,7 @@
 	JoystickPosition readAndCalculateNewJoystickPosition(void) {
 
 		//unset the IT's showing flag
-		inputITFlags.isJoystickChanged = 0;
+		inputITFlags.isJoystickChanged = false;
 
 		//check, if the joystick is active (activity pin is in active state)
 		if (GPIO_PinInGet(JOYSTICK_ACTIVITY_GPIO_PORT, JOYSTICK_ACTIVITY_GPIO_PIN) == JOYSTICK_ACTIVE) {
@@ -71,7 +70,7 @@
 		// so it's sure, that it gave it.
 
 		// So then, set the IT flag for joystick
-		inputITFlags.isJoystickChanged = 1;
+		inputITFlags.isJoystickChanged = true;
 
 		// Clear the EXT IT flag of the GPIO
 		uint32_t clearFlag = (1 << JOYSTICK_DATAIN_GPIO_PIN) | (1 << JOYSTICK_ACTIVITY_GPIO_PIN);	//clear both srouces' bits

@@ -8,14 +8,10 @@
 /// Includes
 	#include "../../../../joystickPosition.h"	//an external header, containing joystick's data
 	#include <stdint.h>		//for precise (with given bits) integers
+	#include "../touch_slider/touchSliderHandler.h"		//abstract handling of the touch slider input
 
 /// Defines
-	#define MAX_TOUCH_SLIDER_VALUE 7	//the maximum integer value of the touch slider (it's fixed from the game logic)
 	enum ButtonIsPressed {ISPRESSED, NOTPRESSED};		//type for describing the status of a button
-
-/// Types
-
-	typedef uint8_t TouchSliderValue;		//own type for representing the touch slider's slide state
 
 	// Contains all inputs' values preprocessed to game logic
 	struct AllProcessedInputs {
