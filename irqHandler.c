@@ -37,6 +37,6 @@
 
 		// Step the overall counter
 		sysTickCounter++;	//it may overflow, but that's fine
-	}
+	} /* SysTick_Handler() */
 
 

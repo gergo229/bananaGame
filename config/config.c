@@ -17,6 +17,7 @@
 			#include "segmentlcd.h"		//header for LCD
 			#include "../input/joystick/joystickHandler.h"	//header for the joystick input
 			#include "../input/touch_slider/touch.h"	//header for touch slider input
+			#include "../input/button/buttonHandler.h"	//header for the button input
 
 /// Defines
 	#define SYSTICKDIVIDER 1000 //clock divider for system timer time
@@ -37,11 +38,15 @@
 		// Configure the GPIO ports, used by the joystick input
 		configJoystickGPIO();
 
+		// Configure the GPIO ports, used by the button input
+		configButtonGPIO();
+
 		// Configure the System Timer (used to periodically start events)
 		SysTick_Config(SystemCoreClock/SYSTICKDIVIDER);		//configure the system timer
 
 		// Configure the touch slider
 		// (its GPIO ports, ACD for reading and Timer to read it)
+		// (after system timer's configuration, it uses that)
 		configTouchSlider();
 
 		// Initialize the LCD

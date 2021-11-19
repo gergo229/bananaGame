@@ -47,7 +47,7 @@
 			return JOYSTICK_DEFAULT;
 	}
 
-	// Configure the GPIO ports, used by the joystick input
+	// Configure the GPIO ports, used by the joystick to an input with edge triggered ITs
 	void configJoystickGPIO(void) {
 
 		// Set the used pins (see at Constants) as standard inputs
@@ -55,7 +55,7 @@
 			GPIO_PinModeSet(JOYSTICK_DATAIN_GPIO_PORT, JOYSTICK_DATAIN_GPIO_PIN, gpioModeInput, false);
 
 		// Set IT to come, as any of the joystick input pins changes
-		//(so enable them, and set them to be sensitive to both rising and falling edges)
+		//(so enable their IT, and set them to be sensitive to both rising and falling edges)
 			GPIO_IntConfig(JOYSTICK_ACTIVITY_GPIO_PORT, JOYSTICK_ACTIVITY_GPIO_PIN, 1, 1, 1);
 			GPIO_IntConfig(JOYSTICK_DATAIN_GPIO_PORT, JOYSTICK_DATAIN_GPIO_PIN, 1, 1, 1);
 	}
@@ -72,8 +72,8 @@
 		// So then, set the IT flag for joystick
 		inputITFlags.isJoystickChanged = true;
 
-		// Clear the EXT IT flag of the GPIO
-		uint32_t clearFlag = (1 << JOYSTICK_DATAIN_GPIO_PIN) | (1 << JOYSTICK_ACTIVITY_GPIO_PIN);	//clear both srouces' bits
+		// Clear the EXT IT flag
+		uint32_t clearFlag = (1 << JOYSTICK_DATAIN_GPIO_PIN) | (1 << JOYSTICK_ACTIVITY_GPIO_PIN);	//clear both srouces' bits (flags are grouped from pins)
 		GPIO_IntClear(clearFlag);
 	}
 

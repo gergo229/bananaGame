@@ -6,12 +6,13 @@
 #define INPUT_HANDLER_H_
 
 /// Includes
-	#include "../../../../joystickPosition.h"	//an external header, containing joystick's data
 	#include <stdint.h>		//for precise (with given bits) integers
-	#include "../touch_slider/touchSliderHandler.h"		//abstract handling of the touch slider input
 
-/// Defines
-	enum ButtonIsPressed {ISPRESSED, NOTPRESSED};		//type for describing the status of a button
+	#include "../../../../joystickPosition.h"	//an external header, containing joystick's data
+	#include "../touch_slider/touchSliderHandler.h"		//abstract handling of the touch slider input
+	#include "../button/buttonHandler.h"		//handler of the button input (contains the button state type)
+
+/// Types
 
 	// Contains all inputs' values preprocessed to game logic
 	struct AllProcessedInputs {

@@ -12,9 +12,6 @@
 	#define MAX_TOUCH_SLIDER_LOGICAL_VALUE 7 	//the maximum integer value of the logical touch slider position
 												//(it's fixed from the game)
 
-/// Global variables
-	extern struct InputITFlags inputITFlags;		//a global flag structure, which signs, if a change occurred in inputs
-
 /// Main functions
 
 	// Reads the new touch slider position and processes it

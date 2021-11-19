@@ -26,8 +26,8 @@
 				allProcessedInputs_p->joystickPosition = readAndCalculateNewJoystickPosition();
 
 			// If button's state changed, then calculate the new value of it
-			if (inputITFlags.isButtonChanged);
-				//allProcessedInputs_p->buttonState = readAndCalculateNewButtonState();
+			if (inputITFlags.isButtonChanged)
+				allProcessedInputs_p->buttonState = readAndCalculateNewButtonState();
 
 			// If touch slider's state changed, then calculate the new value of it
 			if (inputITFlags.isTouchSliderChanged)
