@@ -37,6 +37,8 @@
 		// Configure the GPIO ports, used by the joystick input
 		configJoystickGPIO();
 
+		// Configure the System Timer (used to periodically start events)
+		SysTick_Config(SystemCoreClock/SYSTICKDIVIDER);		//configure the system timer
 
 		// Configure the touch slider
 		// (its GPIO ports, ACD for reading and Timer to read it)
@@ -44,9 +46,6 @@
 
 		// Initialize the LCD
 		SegmentLCD_Init(false);		//configure the LCD
-
-		// Configure the System Timer (used to periodically start events)
-		SysTick_Config(SystemCoreClock/SYSTICKDIVIDER);		//configure the system timer
 
 		//Enable global ITs
 		 NVIC_EnableIRQ(GPIO_EVEN_IRQn);

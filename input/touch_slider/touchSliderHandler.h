@@ -10,7 +10,11 @@
 
 /// Types
 
-	typedef uint8_t TouchSliderValue;		//own type for representing the touch slider's slide state
+	// Type for representing the touch slider's slide state
+	typedef int8_t TouchSliderValue;
+		#define TOUCH_SLIDER_NOT_TOUCHED -1		//-1 shows it isn't pressed
+		//values from 0 to MAX_TOUCH_SLIDER_LOGICAL_VALUE
+	    //- see define in touchSliderHandler.c)
 
 /// Functions
 

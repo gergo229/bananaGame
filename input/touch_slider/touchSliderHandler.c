@@ -8,8 +8,9 @@
 
 /// Defines
 	#define MAX_TOUCH_SLIDER_INPUT_VALUE 7	//the maximum integer value of the touch slider input
-	#define MAX_TOUCH_SLIDER_LOGICAL_VALUE 7 //the maximum integer value of the logical touch slider position
-											//(it's fixed from the game)
+											//(it's fixed in the implementation of hadnling low-level the touch slider - ses touch.c)
+	#define MAX_TOUCH_SLIDER_LOGICAL_VALUE 7 	//the maximum integer value of the logical touch slider position
+												//(it's fixed from the game)
 
 /// Global variables
 	extern struct InputITFlags inputITFlags;		//a global flag structure, which signs, if a change occurred in inputs
@@ -21,10 +22,13 @@
 	TouchSliderValue readAndCalculateNewTouchSliderPosition(void) {
 
 		 // Read the new touch slider position
-			 unsigned int newTouchSliderValue = Touch_Interpolate(Touch_Read());
-			 // (it contains 1 bit of 7, indicating where the center of touch is)
+			 int newTouchSliderValue = Touch_GetCenterOfTouch(Touch_Read());
+			 // (it gives the result in range 0-MAX_TOUCH_SLIDER_INPUT_VALUE, -1 if not touched)
 
 		 // Map the input value into the logical touch slider position, and return it
 			 float mappingConstant = (float)MAX_TOUCH_SLIDER_LOGICAL_VALUE / (float)MAX_TOUCH_SLIDER_INPUT_VALUE;	//calculate it from upper limits
-			 return (TouchSliderValue)((float)newTouchSliderValue * mappingConstant);
+			 if (newTouchSliderValue == -1)		//if it's not pressed (value -1 shows that)
+				 return TOUCH_SLIDER_NOT_TOUCHED;
+			 else
+				 return (TouchSliderValue)((float)newTouchSliderValue * mappingConstant);
 	}
