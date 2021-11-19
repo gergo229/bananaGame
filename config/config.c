@@ -7,14 +7,16 @@
 	#include "config.h"	 //own header
 
 	// Input specific headers
-		#include "segmentlcd.h"		//header for LCD
-		#include "../touch_slider/touch.h"	//header for touch slider
-		#include "../joystick/joystickHandler.h"	//header for the joystick input
 
-	// EmLib header
-		#include "em_cmu.h"
-		#include "em_gpio.h"
-		#include "em_device.h"
+		// EmLib headers
+			#include "em_cmu.h"
+			#include "em_gpio.h"
+			#include "em_device.h"
+
+		// Peripheral specific headers
+			#include "segmentlcd.h"		//header for LCD
+			#include "../input/joystick/joystickHandler.h"	//header for the joystick input
+			#include "../input/touch_slider/touch.h"	//header for touch slider input
 
 /// Defines
 	#define SYSTICKDIVIDER 1000 //clock divider for system timer time
@@ -35,8 +37,15 @@
 		// Configure the GPIO ports, used by the joystick input
 		configJoystickGPIO();
 
-		SegmentLCD_Init(false);		//configure the LCD
+
+		// Configure the touch slider
+		// (its GPIO ports, ACD for reading and Timer to read it)
 		configTouchSlider();
+
+		// Initialize the LCD
+		SegmentLCD_Init(false);		//configure the LCD
+
+		// Configure the System Timer (used to periodically start events)
 		SysTick_Config(SystemCoreClock/SYSTICKDIVIDER);		//configure the system timer
 
 		//Enable global ITs
@@ -52,6 +61,6 @@
 	}
 
 	// Configure the touch slider
-	void configTouchSlider(void) {
+	inline void configTouchSlider(void) {
 		Touch_Init();
 	}

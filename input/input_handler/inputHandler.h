@@ -6,7 +6,7 @@
 #define INPUT_HANDLER_H_
 
 /// Includes
-	#include "../../../joystickPosition.h"	//an external header, containing joystick's data
+	#include "../../../../joystickPosition.h"	//an external header, containing joystick's data
 	#include <stdint.h>		//for precise (with given bits) integers
 
 /// Defines

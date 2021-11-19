@@ -3,8 +3,9 @@
  */
 
 /// Includes
-	#include "inputHandler.h"	//own header
-	#include "../../../joystickPosition.h"	//an external header, containing joystick's data
+	#include "../input_handler/inputHandler.h"	//own header
+
+	#include "../../../../joystickPosition.h"	//an external header, containing joystick's data
 
 	// Input specific handlers
 		#include "../button/buttonHandler.h"		//button handling functions

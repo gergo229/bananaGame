@@ -1,9 +1,9 @@
 /*
- *	Source, which defines IRQ handler functions of the whole program
+ *	Source, which defines common IRQ handler functions
  */
 
 /// Includes
-	#include "touch_slider/touch.h"
+	#include "input/touch_slider/touch.h"
 
 /// Defines
 	#define TOUCH_PERIOD 10 //frequency divider for reading the touchslider input

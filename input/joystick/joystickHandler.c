@@ -5,9 +5,10 @@
 /// Includes
 	#include "joystickHandler.h"	//own header
 
-	#include "../../../joystickPosition.h"	//an external header, containing joystick's data
+	#include "../../../../joystickPosition.h"	//an external header, containing joystick's data
 	#include "em_gpio.h"	//for abstract GPIO handling
-	#include "../input_handler/inputHandler.h"		//for the IT flag structure
+	
+#include "../input_handler/inputHandler.h"		//for the IT flag structure
 
 /// Constants
 

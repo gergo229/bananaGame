@@ -17,10 +17,11 @@
  */
 
 
+#include "touch.h"
+
 #include <stdint.h>
 #include "em_device.h"
 //#include "gpio.h"
-#include "touch.h"
 
 /*
  * Hardware configuration
