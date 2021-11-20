@@ -48,4 +48,3 @@ struct DisplayData{
 void displayData(const struct DisplayData* const displayData);
 struct DisplayData* constructDisplayData();
 void destructDisplayData(struct DisplayData* displayData);
-void initializeDisplayData(struct DisplayData* displayData);
