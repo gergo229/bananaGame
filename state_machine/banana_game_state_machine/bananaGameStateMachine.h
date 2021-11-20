@@ -17,13 +17,25 @@
     // State structure for BananaGameStateMachine
     struct BananaGameStateMachine_State {
         
+    	// The additional action to do when step in to the state
+    	void (*stepInAction) (struct BananaGameStateMachine_State* const actualBananaGameStateMachine_State_p);
+
+    	// The action to do when in the state
         void (*action)(
+        		struct BananaGameStateMachine_State* const actualBananaGameStateMachine_State_p,
                 const struct AllProcessedInputData* const inputData_p, 
                 struct DisplayData* const displayData_p
-        );   //the action to do when in the state
+        );
         
-        void* data;     //the state's data
-        enum BananaGameStateMachine_StateName (*newState)(void);     //determines, to which state go (can be the same)
+        // The state's data
+        void* data;
+
+        // Determines, to which state go (can be the same)
+        enum BananaGameStateMachine_StateName (*newState)(
+        		struct BananaGameStateMachine_State* const actualBananaGameStateMachine_State_p,
+        		const struct AllProcessedInputData* const inputData_p
+        );
+
     };
 
     // The BananaGameStateMachine structure
@@ -35,10 +47,6 @@
     };
 
 //  State specific headers should contain this
-//    struct SettingsStateData {
-//    	uint8_t difficulty;
-//    	uint8_t isMultiplayer;
-//    };
 //
 //    struct GameplayData{
 //    	uint8_t bucketPlayer1;

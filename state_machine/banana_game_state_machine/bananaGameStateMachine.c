@@ -8,9 +8,9 @@
     #include "bananaGameStateMachine.h"
 
     // State specific headers
-        #include "setup_state.h"
-        #include "game_state.h"
-        #include "finish_state.h"
+        #include "../steup_state/setupState.h"
+        #include "../game_state/gameState.h"
+        #include "../finish_state/finishState.h"
     
     // In-out data headers
         #include "../../display_data/displayData.h"    //the output data (this will be displayed later)
@@ -26,19 +26,24 @@
             newBananaGameStateMachine_p->actualState = SETUP;            //the initial state is Setup
 
             // Construct states' data (allocate memory for them, they will be initialized at state changes)
-            newBananaGameStateMachine_p->states[SETUP].data = malloc(sizeof(struct BananaGameStateMachine_SetupStateData));
-            newBananaGameStateMachine_p->states[FINISH].data = malloc(sizeof(struct BananaGameStateMachine_GameStateData));
-            newBananaGameStateMachine_p->states[GAME].data = malloc(sizeof(struct BananaGameStateMachine_FinishStateData));
+            newBananaGameStateMachine_p->states[SETUP].data = malloc(sizeof(struct BananaGameStateMachine_SetupState_Data));
+            newBananaGameStateMachine_p->states[FINISH].data = malloc(sizeof(struct BananaGameStateMachine_GameState_Data));
+            newBananaGameStateMachine_p->states[GAME].data = malloc(sizeof(struct BananaGameStateMachine_FinishState_Data));
         
             // Set the action function pointers (to functions defined before to the desired work)
-            newBananaGameStateMachine_p->states[SETUP].action = BananaGameStateMachine_SetupStateAction;
-            newBananaGameStateMachine_p->states[FINISH].action = BananaGameStateMachine_GameStateAction;
-            newBananaGameStateMachine_p->states[GAME].action = BananaGameStateMachine_FinishStateAction;
+            newBananaGameStateMachine_p->states[SETUP].action = BananaGameStateMachine_SetupState_Action;
+            newBananaGameStateMachine_p->states[FINISH].action = BananaGameStateMachine_GameState_Action;
+            newBananaGameStateMachine_p->states[GAME].action = BananaGameStateMachine_FinishState_Action;
+
+            // Set the step in action function pointers (to functions defined before to the desired work)
+			newBananaGameStateMachine_p->states[SETUP].stepInAction = BananaGameStateMachine_SetupState_StepInAction;
+			newBananaGameStateMachine_p->states[FINISH].stepInAction = BananaGameStateMachine_GameState_StepInAction;
+			newBananaGameStateMachine_p->states[GAME].stepInAction = BananaGameStateMachine_FinishState_StepInAction;
 
             // Set the switching function pointers (to functions defined before to the desired work)
-            newBananaGameStateMachine_p->states[SETUP].newState = BananaGameStateMachine_SetupStateNewState;
-            newBananaGameStateMachine_p->states[FINISH].newState = BananaGameStateMachine_GameStateNewState;
-            newBananaGameStateMachine_p->states[GAME].newState = BananaGameStateMachine_FinishStateNewState;
+            newBananaGameStateMachine_p->states[SETUP].newState = BananaGameStateMachine_SetupState_NewState;
+            newBananaGameStateMachine_p->states[FINISH].newState = BananaGameStateMachine_GameState_NewState;
+            newBananaGameStateMachine_p->states[GAME].newState = BananaGameStateMachine_FinishState_NewState;
         }
 
         // Destructor of the BananaGameStateMachine
@@ -53,9 +58,10 @@
         // State switching function of BananaGameStateMachine (performs the state switch)
         void BananaGameStateMachine_switchState(struct BananaGameStateMachine* actualBananaGameStateMachine_p) {
             
-            // Call the actual state' state switching function
+            // Call the actual state' state switching function (and store the new state)
                 enum BananaGameStateMachine_StateName actualState = actualBananaGameStateMachine_p->actualState;
-                actualBananaGameStateMachine_p->states[actualState].newState();
+                actualBananaGameStateMachine_p->actualState =
+                	actualBananaGameStateMachine_p->states[actualState].newState();
         }
 
         // Acting function of BananaGameStateMachine

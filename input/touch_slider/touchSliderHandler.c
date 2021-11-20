@@ -9,8 +9,6 @@
 /// Defines
 	#define MAX_TOUCH_SLIDER_INPUT_VALUE 7	//the maximum integer value of the touch slider input
 											//(it's fixed in the implementation of hadnling low-level the touch slider - ses touch.c)
-	#define MAX_TOUCH_SLIDER_LOGICAL_VALUE 7 	//the maximum integer value of the logical touch slider position
-												//(it's fixed from the game)
 
 /// Main functions
 
