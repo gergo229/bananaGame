@@ -1,23 +1,27 @@
 // Includes
 #include <stdint.h>
+
 // Defines
 #define _isActive_ uint8_t isActive
 
-// Defining used lcd dimensions
-#define LOWER_SEGMENT_LENGTH 7
+// Defining lcd dimensions
+#define LOWER_SEGMENT_WIDTH 7
 #define LOWER_SEGMENT_HEIGHT 5
 
 // Connecting lcd segment positions to gamelogic objects
 #define BANANA_POS_TOP a
-#define BANANA_POS_MIDDLE
-#define BANANA_POS_BOTTOM
+#define BANANA_POS_MIDDLE j
+#define BANANA_POS_BOTTOM p
 #define BUCKET_POS_LOWER d
 #define BUCKET_POS_UPPER_LEFT_SEGMENT g
 #define BUCKET_POS_UPPER_RIGHT_SEGMENT m
 
-#define BANANA_MATRIX_HEIGHT LOWER_SEGMENT_LENGTH - 2
+// Defining the used part of lcd
+#define BANANA_MATRIX_HEIGHT LOWER_SEGMENT_HEIGHT - 2
+#define BANANA_MATRIX_WIDTH LOWER_SEGMENT_WIDTH
 
-//The following struct contains data for lcd
+//The following struct contains data to display on lcd
+//note the isActive variables: these define whether the game data should be displayed in a given gameState
 struct DisplayData{
 	struct Difficulty{
 		_isActive_;
@@ -25,12 +29,7 @@ struct DisplayData{
 	} difficulty;
 	struct GamePlay{
 		_isActive_;
-		uint8_t bananaMatrix[BANANA_MATRIX_HEIGHT][LOWER_SEGMENT_LENGTH];
-		struct BananaPosMatrix{
-			uint8_t bananaPosTop[LOWER_SEGMENT_LENGTH];
-			uint8_t bananaPosMiddle[LOWER_SEGMENT_LENGTH];
-			uint8_t bananaPosBottom[LOWER_SEGMENT_LENGTH];
-		} bananaPosMatrix;
+		uint8_t bananaMatrix[BANANA_MATRIX_HEIGHT][BANANA_MATRIX_WIDTH];	//contains all the appearing bananas in a 2D matrix
 		uint8_t bucketPosLower;
 		uint8_t bucketPosUpper;
 	} gamePlay;
@@ -41,7 +40,7 @@ struct DisplayData{
 	} points;
 	struct Text{
 		_isActive_;
-		char text[LOWER_SEGMENT_LENGTH];
+		char text[LOWER_SEGMENT_WIDTH];
 	} text;
 };
 
