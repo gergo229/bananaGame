@@ -29,6 +29,7 @@ struct DisplayData{
 	} difficulty;
 	struct GamePlay{
 		_isActive_;
+		//uint8_t bananaMatrix[BANANA_MATRIX_HEIGHT];
 		uint8_t bananaMatrix[BANANA_MATRIX_HEIGHT][BANANA_MATRIX_WIDTH];	//contains all the appearing bananas in a 2D matrix
 		uint8_t bucketPosLower;
 		uint8_t bucketPosUpper;
@@ -45,6 +46,6 @@ struct DisplayData{
 };
 
 void displayData(const struct DisplayData* const displayData);
-void constructDisplayData(struct DisplayData* displayData);
+struct DisplayData* constructDisplayData();
 void destructDisplayData(struct DisplayData* displayData);
 void initializeDisplayData(struct DisplayData* displayData);

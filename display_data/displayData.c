@@ -20,11 +20,11 @@ void displayData(const struct DisplayData* const displayData){
 	}
 
 	if(displayData->gamePlay.isActive){
-		SegmentLCD_LowerCharSegments_TypeDef lowerCharSegments[7];
+		SegmentLCD_LowerCharSegments_TypeDef lowerCharSegments[LOWER_SEGMENT_WIDTH];
 		for(int i = 0; i < BANANA_MATRIX_WIDTH; i++){											//-- and position of bananas
 			lowerCharSegments[i].raw = 0;
 		}				//initialize variable --
-		lowerCharSegments[displayData->gamePlay.bucketPosLower].BUCKET_POS_LOWER = 1;			//-- based on position of buckets --
+		lowerCharSegments[displayData->gamePlay.bucketPosLower + 1].BUCKET_POS_LOWER = 1;			//-- based on position of buckets --
 		lowerCharSegments[displayData->gamePlay.bucketPosUpper].BUCKET_POS_UPPER_LEFT_SEGMENT = 1;
 		lowerCharSegments[displayData->gamePlay.bucketPosUpper].BUCKET_POS_UPPER_RIGHT_SEGMENT = 1;
 		for(int i = 0; i < BANANA_MATRIX_WIDTH; i++){											//-- and position of bananas
@@ -40,8 +40,15 @@ void displayData(const struct DisplayData* const displayData){
 }
 
 // Constructor for displayData. Calloc function is used, because the fields need to be initialized to 0
-void constructDisplayData(struct DisplayData* displayData){
-	displayData = calloc(1, sizeof(struct DisplayData));
+struct DisplayData* constructDisplayData(){
+	struct DisplayData* displayData = calloc(1, sizeof(struct DisplayData));
+	for(int i = 0; i < BANANA_MATRIX_HEIGHT; i++)
+			for(int l = 0; l < BANANA_MATRIX_WIDTH; l++)
+				displayData->gamePlay.bananaMatrix[i][l] = -1;
+	return displayData;
+	//displayData = malloc(sizeof(struct DisplayData));
+//	displayData->difficulty.difficulty = 5;
+//		displayData->difficulty.isActive = 1;
 //	displayData->difficulty = calloc(1, sizeof(struct Difficulty));
 //	displayData->gamePlay = calloc(1, sizeof(struct GamePlay));
 //	displayData->points = calloc(1, sizeof(struct Points));
