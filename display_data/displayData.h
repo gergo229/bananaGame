@@ -45,3 +45,6 @@ struct DisplayData{
 };
 
 void displayData(const struct DisplayData* const displayData);
+void constructDisplayData(struct DisplayData* displayData);
+void destructDisplayData(struct DisplayData* displayData);
+void initializeDisplayData(struct DisplayData* displayData);

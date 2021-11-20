@@ -39,7 +39,26 @@ void displayData(const struct DisplayData* const displayData){
 	}
 }
 
-void initializeDisplayData(struct DisplayData* const displayData){
+// Constructor for displayData. Calloc function is used, because the fields need to be initialized to 0
+void constructDisplayData(struct DisplayData* displayData){
+	displayData = calloc(1, sizeof(struct DisplayData));
+//	displayData->difficulty = calloc(1, sizeof(struct Difficulty));
+//	displayData->gamePlay = calloc(1, sizeof(struct GamePlay));
+//	displayData->points = calloc(1, sizeof(struct Points));
+//	displayData->text = calloc(1, sizeof(struct Text));
+}
+
+// Destructor for displayData
+void destructDisplayData(struct DisplayData* displayData){
+//	free(displayData->difficulty);
+//	free(displayData->gamePlay);
+//	free(displayData->points);
+//	free(displayData->text);
+	free(displayData);
+}
+
+void initializeDisplayData(struct DisplayData* displayData){
+	//displayData = malloc(sizeof(struct DisplayData));
 	struct DisplayData d= {.difficulty.difficulty = 0,.difficulty.isActive = 0, .points.max = 0, .points.current = 0, .points.isActive = 0, \
 			.text.text = "", .text.isActive = 0, .gamePlay.bucketPosLower = 0, .gamePlay.bucketPosUpper = 0,  .gamePlay.isActive = 0};
 	for(int i = 0; i < BANANA_MATRIX_HEIGHT; i++)
