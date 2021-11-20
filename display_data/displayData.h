@@ -4,6 +4,8 @@
 // Defines
 #define _isActive_ uint8_t isActive
 
+#define IS_NOT_SET -1
+
 // Defining lcd dimensions
 #define LOWER_SEGMENT_WIDTH 7
 #define LOWER_SEGMENT_HEIGHT 5

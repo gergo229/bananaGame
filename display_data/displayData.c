@@ -44,12 +44,9 @@ void displayData(const struct DisplayData* const displayData){
 
 // Constructor is needed, if not all position data is set, only the active ones
 struct DisplayData* constructDisplayData(){
-	struct DisplayData* displayData = calloc(1,sizeof(struct DisplayData));
-//	for(int i = 0; i < BANANA_MATRIX_HEIGHT; i++)				//going through position data
-//			for(int l = 0; l < BANANA_MATRIX_WIDTH; l++)
-//				displayData->gamePlay.bananaMatrix[i][l] = -1;	//initialize position data to -1
-	displayData->gamePlay.bucketPosLower = -1;
-	displayData->gamePlay.bucketPosUpper = -1;
+	struct DisplayData* displayData = calloc(1, sizeof(struct DisplayData));
+	displayData->gamePlay.bucketPosLower = IS_NOT_SET;
+	displayData->gamePlay.bucketPosUpper = IS_NOT_SET;
 
 	return displayData;
 }
