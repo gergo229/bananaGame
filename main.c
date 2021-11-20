@@ -9,15 +9,8 @@ int main(void) {
 
 	configAll();
 
-	SegmentLCD_Init(false);
 	struct DisplayData* displaydata = constructDisplayData();
-	//displaydata = malloc(sizeof(struct DisplayData));
-union alma{
-
-	};
-
-
-	//initialize *displaydata with values to display to lcd
+	//initializie displaydata with values
 	displaydata->difficulty.difficulty = 5;
 	displaydata->difficulty.isActive = 1;
 	SegmentLCD_Number(displaydata->difficulty.difficulty);
