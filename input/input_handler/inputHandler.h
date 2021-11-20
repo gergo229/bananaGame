@@ -8,7 +8,7 @@
 /// Includes
 	#include <stdint.h>		//for precise (with given bits) integers
 
-	#include "../../../../joystickPosition.h"	//an external header, containing joystick's data
+	#include "../../joystickPosition.h"	//an external header, containing joystick's data
 	#include "../touch_slider/touchSliderHandler.h"		//abstract handling of the touch slider input
 	#include "../button/buttonHandler.h"		//handler of the button input (contains the button state type)
 
