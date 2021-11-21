@@ -1,49 +1,52 @@
-#include "config/config.h"	//for eternal configuration
-#include "input/input_handler/inputHandler.h"	//for handling the inputs
-#include "segmentlcd.h"
-#include "display_data/displayData.h"
+/*
+*   Main source file BananaCooperativeMultiplayerGame
+*/
 
-volatile struct InputITFlags inputITFlags;	//a global structure, to indicate changing in inputs
+/// Includes
+    #include "input/input_handler/inputHandler.h"   //for handling the physical inputs
+    #include "state_machine/banana_game_state_machine/bananaGameStateMachine.h"         //for the state machine of the program
+    #include "display_data/displayData.h"       //for displayment of the output data
+	#include "config/config.h"	//for eternal configuration
 
-int main(void) {
+/// The main function
 
-	configAll();
+int main (void) {
 
-	struct DisplayData displaydata;
-	InitializeDisplayData(&displaydata);
-	//initializie displaydata with values
-	DisplayData_setDifficulty(&displaydata, 1);
+    // Create the statemachine
+        struct BananaGameStateMachine bananagameStateMachine;
+        BananaGameStateMachine_construct(&bananagameStateMachine);
 
-//	displaydata.difficulty.difficulty = 5;
-//	displaydata.difficulty.isActive = 1;
-//	SegmentLCD_Number(displaydata.difficulty.difficulty);
+    // Create the input data structure
+    struct AllProcessedInputData allProcessedInputData = ALL_PROCESSED_INPUT_DATA_DEFAULT;
 
-	DisplayData_setPoints(&displaydata, 3, 5);
-//	displaydata.points.current = 10;
-//	displaydata.points.max = 11;
-//	displaydata.points.isActive = 1;
+    // Create the output (display) structure
+    struct DisplayData displayData;
 
-	//DisplayData_setText(&displaydata, "alma");
+    // The superloop
+    while (1) {
 
-//	char alma[7] = "alamspi";
-//	strcpy(displaydata.text.text, alma);
-//	displaydata.text.isActive = 0;
-	struct BananaMatrix bananaMatrix;
-	for(int rows = 0; rows<BANANA_MATRIX_HEIGHT; rows++)
-		for(int columns = 0; columns < BANANA_MATRIX_HEIGHT; columns++)
-			bananaMatrix.matrix[rows][columns]= 0;
-	bananaMatrix.matrix[1][3] = 1;
-	DisplayData_setGamePlay(&displaydata, &bananaMatrix, 2, 4);
-//	displaydata.gamePlay.bucketPosUpper = 1;
-//	displaydata.gamePlay.bananaMatrix[1][3]=1;
-//	displaydata.gamePlay.isActive = 1;
+        // Read inputs
+        checkInputsAndProcess(&allProcessedInputData);
 
-	displayData(&displaydata);
+        // State machine cycle
+            BananaGameStateMachine_act(
+                &bananagameStateMachine,
+                (const struct AllProcessedInputData*) &allProcessedInputData,
+                &displayData
+            );
+            BananaGameStateMachine_switchState(
+            		&bananagameStateMachine,
+					(const struct AllProcessedInputData*) &allProcessedInputData
+			);
 
-	while(1) {
+        // Display the output data
+        displayData((const struct DisplayData*) &displayData);
+    }
+    
+    // here the program won't come... - while(1)
 
+    // Destruct the statemachine
+    BananaGameStateMachine_destruct(&bananagameStateMachine);
 
-	}
-
-	return 0;
+    return 0;
 }

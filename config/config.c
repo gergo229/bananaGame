@@ -43,6 +43,7 @@
 
 		// Configure the System Timer (used to periodically start events)
 		SysTick_Config(SystemCoreClock/SYSTICKDIVIDER);		//configure the system timer
+														   //(set it's reload value, enable its IT: SysTick_Handler)
 
 		// Configure the touch slider
 		// (its GPIO ports, ACD for reading and Timer to read it)

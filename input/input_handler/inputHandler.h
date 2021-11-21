@@ -15,15 +15,15 @@
 /// Types
 
 	// Contains all inputs' values preprocessed to game logic
-	struct AllProcessedInputs {
+	struct AllProcessedInputData {
 		JoystickPosition joystickPosition;	//position of the joystick
 		enum ButtonIsPressed buttonState;	//state of the button
 		TouchSliderValue touchSliderState;	//state of the touch slider
 	};
 		// Default/initilazation value of the AllPorcessedInputs struct
-		#define ALL_PROCESSED_INPUTS_DEFAULT { \
+		#define ALL_PROCESSED_INPUT_DATA_DEFAULT { \
 			.joystickPosition = JOYSTICK_DEFAULT, \
-			.buttonState = NOTPRESSED, \
+			.buttonState = BUTTON_NOTPRESSED, \
 			.touchSliderState = 0 \
 		};
 
@@ -37,6 +37,6 @@
 /// Functions
 
 	// Checks, if a change occurred recently and process it if needed
-	void checkInputsAndProcess(struct AllProcessedInputs* allProcessedInputs_p);
+	void checkInputsAndProcess(struct AllProcessedInputData* allProcessedInputs_p);
 
 #endif /* INPUT_HANDLER_H_ */

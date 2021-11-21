@@ -18,7 +18,7 @@
 /// Main functions
 
 	// Checks, if a change occurred recently and process it if needed
-	void checkInputsAndProcess(struct AllProcessedInputs* allProcessedInputs_p) {
+	void checkInputsAndProcess(struct AllProcessedInputData* allProcessedInputs_p) {
 
 		// Check through the inputs, and if needed call their calculation function
 			// If joystick's position changed, then calculate the new value of it
