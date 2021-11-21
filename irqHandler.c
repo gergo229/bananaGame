@@ -24,7 +24,7 @@
 	void SysTick_Handler(void){
 
 		// Overall counter of systicks
-		static uint8_t sysTickCounter = 0;		//initialize it with 0
+		static uint32_t sysTickCounter = 0;		//initialize it with 0
 
 		// Touch slider's reading timing
 		if (sysTickCounter % TOUCH_SLIDER_READ_PERIOD == 0)	//if reached the "tick"
@@ -37,6 +37,7 @@
 
 		// Step the overall counter
 		sysTickCounter++;	//it may overflow, but that's fine
+
 	} /* SysTick_Handler() */
 
 

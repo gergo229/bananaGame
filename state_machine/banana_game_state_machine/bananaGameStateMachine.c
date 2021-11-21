@@ -25,7 +25,7 @@
         void BananaGameStateMachine_construct(struct BananaGameStateMachine* const newBananaGameStateMachine_p) {
             
             // Set the initial state
-            newBananaGameStateMachine_p->actualState = STATE_SETUP;            //the initial state is Setup
+            newBananaGameStateMachine_p->currentState = STATE_SETUP;            //the initial state is Setup
 
             // Construct states' data (allocate memory for them)
             newBananaGameStateMachine_p->states[STATE_SETUP].data = malloc(sizeof(struct BananaGameStateMachine_SetupState_Data));
@@ -64,29 +64,29 @@
 
         // State switching function of BananaGameStateMachine (performs the state switch)
         void BananaGameStateMachine_switchState(
-        		struct BananaGameStateMachine* actualBananaGameStateMachine_p,
+        		struct BananaGameStateMachine* currentBananaGameStateMachine_p,
 				const struct AllProcessedInputData* const allProcessedInputData_p
 		) {
             
-            // Call the actual state' state switching function (and store the new state)
-                enum BananaGameStateMachine_StateName actualState = actualBananaGameStateMachine_p->actualState;
-                actualBananaGameStateMachine_p->states[actualState].newState(
-                	(struct BananaGameStateMachine* const) actualBananaGameStateMachine_p,
+            // Call the current state' state switching function (and store the new state)
+                enum BananaGameStateMachine_StateName currentState = currentBananaGameStateMachine_p->currentState;
+                currentBananaGameStateMachine_p->states[currentState].newState(
+                	(struct BananaGameStateMachine* const) currentBananaGameStateMachine_p,
 					allProcessedInputData_p
                 );
         }
 
         // Acting function of BananaGameStateMachine
         void BananaGameStateMachine_act(
-                struct BananaGameStateMachine* const actualBananaGameStateMachine_p,
+                struct BananaGameStateMachine* const currentBananaGameStateMachine_p,
                 const struct AllProcessedInputData* const allProcessedInputData_p,
                 struct DisplayData* const displayData_p
             ) {
             
-            	//Call the actual state's action function
-                	enum BananaGameStateMachine_StateName actualState = actualBananaGameStateMachine_p->actualState;
-                	actualBananaGameStateMachine_p->states[actualState].action(
-                			&actualBananaGameStateMachine_p->states[actualState],
+            	//Call the current state's action function
+                	enum BananaGameStateMachine_StateName currentState = currentBananaGameStateMachine_p->currentState;
+                	currentBananaGameStateMachine_p->states[currentState].action(
+                			&currentBananaGameStateMachine_p->states[currentState],
 							allProcessedInputData_p,
 							displayData_p
                 	);

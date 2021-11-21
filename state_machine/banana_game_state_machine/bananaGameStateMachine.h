@@ -9,6 +9,8 @@
     // In-out data headers
         #include "../../display_data/displayData.h"    //the output data (this will be displayed later)
 		#include "../../input/input_handler/inputHandler.h"      //the input data (this comes from physical inputs)
+
+	// Standard C headers
 		#include <stdint.h>		//for precise sized (with given bits) integers
 
 /// Constants
@@ -28,11 +30,11 @@
     struct BananaGameStateMachine_State {
         
     	// The additional action to do when step in to the state
-    	void (*stepInAction) (struct BananaGameStateMachine* const actualBananaGameStateMachine_p);
+    	void (*stepInAction) (struct BananaGameStateMachine* const currentBananaGameStateMachine_p);
 
     	// The action to do when in the state
         void (*action)(
-        		struct BananaGameStateMachine_State* const actualBananaGameStateMachine_p,
+        		struct BananaGameStateMachine_State* const currentBananaGameStateMachine_p,
                 const struct AllProcessedInputData* const inputData_p, 
                 struct DisplayData* const displayData_p
         );
@@ -42,7 +44,7 @@
 
         // Determines, to which state go and does it
         void (*newState)(
-        		struct BananaGameStateMachine* const actualBananaGameStateMachine_p,
+        		struct BananaGameStateMachine* const currentBananaGameStateMachine_p,
         		const struct AllProcessedInputData* const inputData_p
         );
 
@@ -53,7 +55,7 @@
 
         // Data about states
             struct BananaGameStateMachine_State states[3];
-            enum BananaGameStateMachine_StateName actualState;  
+            enum BananaGameStateMachine_StateName currentState;
     };
 
 /// Functions
@@ -65,13 +67,13 @@
     
     // State switching function of BananaGameStateMachine (performs the state switch)
     void BananaGameStateMachine_switchState(
-    		struct BananaGameStateMachine* const actualBananaGameStateMachine_p,
+    		struct BananaGameStateMachine* const currentBananaGameStateMachine_p,
 			const struct AllProcessedInputData* const allProcessedInputData_p
 	);
 
     // Acting function of BananaGameStateMachine
     void BananaGameStateMachine_act(
-        struct BananaGameStateMachine* const actualBananaGameStateMachine_p,
+        struct BananaGameStateMachine* const currentBananaGameStateMachine_p,
         const struct AllProcessedInputData* const allProcessedInputData_p,
         struct DisplayData* const displayData_p    
     );

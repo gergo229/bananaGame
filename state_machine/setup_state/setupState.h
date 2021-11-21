@@ -13,21 +13,21 @@
 
 	// Setup state's data structure
 	struct BananaGameStateMachine_SetupState_Data {
-		uint32_t timeAtStartOfState;	//initial time in this state (needed to the seed of later random generation)
-		uint8_t difficulty;		//the chosen difficulty of the game (with touch slider, from 0 to DIFFICULTY_MAX
+		uint32_t timeAtThisState;	//elapsed time in this state (needed to the seed of later random generation)
+		uint8_t difficulty;			//the chosen difficulty of the game (with touch slider, from 0 to DIFFICULTY_MAX
 		bool isFirstInThisState;	//shows, if it's the first cycle in this state
 	};
 
 /// Functions
 
-	// Action, done at stepping into the state
+	// Action, done at stepping into setup state
 	void BananaGameStateMachine_SetupState_stepInAction(
-			struct BananaGameStateMachine* const actualBananaGameStateMachine_p
+			struct BananaGameStateMachine* const currentBananaGameStateMachine_p
 	);
 
 	// Action function of the setup state
 	void BananaGameStateMachine_SetupState_action(
-			struct BananaGameStateMachine* const actualBananaGameStateMachine_p,
+			struct BananaGameStateMachine* const currentBananaGameStateMachine_p,
 			const struct AllProcessedInputData* const inputData_p,
 			struct DisplayData* const displayData_p
 	);
@@ -38,7 +38,7 @@
 		const struct AllProcessedInputData* const inputData_p
 	);
 
-	// Initialize SetupState_Data with default values
+	// Initialize setup state's data with default values
 	void BananaGameStateMachine_SetupState_Data_initialize(
 		struct BananaGameStateMachine_SetupState_Data* const bananaGameStateMachine_SetupState_Data_p
 	);
