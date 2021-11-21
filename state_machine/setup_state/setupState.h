@@ -12,7 +12,7 @@
 
 	// Setup state's data structure
 	struct BananaGameStateMachine_SetupState_Data {
-		uint8_t timeInThisState;	//counted time in this state (used as the seed of later random generation)
+		uint32_t timeAtStartOfState;	//initial time in this state (needed to the seed of later random generation)
 		uint8_t difficulty;		//the chosen difficulty of the game (with touch slider, from 0 to DIFFICULTY_MAX
 	};
 
@@ -29,6 +29,7 @@
 
 	// State switching function of the setup state
 	enum BananaGameStateMachine_StateName BananaGameStateMachine_SetupState_NewState(
+		struct BananaGameStateMachine* const bananaGameStateMachine_p,
 		const struct AllProcessedInputData* const inputData_p
 	);
 

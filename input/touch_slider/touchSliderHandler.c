@@ -7,7 +7,7 @@
 	#include "touch.h"		//utility touch handling source's header
 
 /// Defines
-	#define MAX_TOUCH_SLIDER_INPUT_VALUE 7	//the maximum integer value of the touch slider input
+	#define TOUCH_SLIDER_MAX_INPUT_VALUE 7	//the maximum integer value of the touch slider input
 											//(it's fixed in the implementation of hadnling low-level the touch slider - ses touch.c)
 
 /// Main functions
@@ -21,7 +21,7 @@
 			 // (it gives the result in range 0-MAX_TOUCH_SLIDER_INPUT_VALUE, -1 if not touched)
 
 		 // Map the input value into the logical touch slider position, and return it
-			 float mappingConstant = (float)MAX_TOUCH_SLIDER_LOGICAL_VALUE / (float)MAX_TOUCH_SLIDER_INPUT_VALUE;	//calculate it from upper limits
+			 float mappingConstant = (float)TOUCH_SLIDER_MAX_LOGICAL_VALUE / (float)TOUCH_SLIDER_MAX_INPUT_VALUE;	//calculate it from upper limits
 			 if (newTouchSliderValue == -1)		//if it's not pressed (value -1 shows that)
 				 return TOUCH_SLIDER_NOT_TOUCHED;
 			 else

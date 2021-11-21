@@ -33,7 +33,10 @@ int main (void) {
                 (const struct AllProcessedInputData*) &allProcessedInputData,
                 &displayData
             );
-            BananaGameStateMachine_switchState(&bananagameStateMachine);
+            BananaGameStateMachine_switchState(
+            		&bananagameStateMachine,
+					(const struct AllProcessedInputData*) &allProcessedInputData
+			);
 
         // Display the output data
         displayData((const struct DisplayData*) &displayData);

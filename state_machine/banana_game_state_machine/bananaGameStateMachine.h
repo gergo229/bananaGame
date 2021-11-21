@@ -9,10 +9,15 @@
     // In-out data headers
         #include "../../display_data/displayData.h"    //the output data (this will be displayed later)
 		#include "../../input/input_handler/inputHandler.h"      //the input data (this comes from physical inputs)
+		#include <stdint.h>		//for precise sized (with given bits) integers
+
+/// Constants
+	const uint8_t DIFFICULTY_MAX = 100;	//the maximum difficulty level
+	const uint8_t DIFFICULTY_DEFAULT = 30;	//the default difficulty level
 
 /// Types
     // Enum for the names of states in BananaGameStateMachine
-    enum BananaGameStateMachine_StateName {SETUP, GAME, FINISH};
+    enum BananaGameStateMachine_StateName {STATE_SETUP, STATE_GAME, STATE_FINISH};
 
     // State structure for BananaGameStateMachine
     struct BananaGameStateMachine_State {
@@ -32,7 +37,7 @@
 
         // Determines, to which state go (can be the same)
         enum BananaGameStateMachine_StateName (*newState)(
-        		struct BananaGameStateMachine_State* const actualBananaGameStateMachine_State_p,
+        		struct BananaGameStateMachine* const actualBananaGameStateMachine_p,
         		const struct AllProcessedInputData* const inputData_p
         );
 
@@ -63,12 +68,15 @@
     void BananaGameStateMachine_destruct(struct BananaGameStateMachine* const oldBananaGameStateMachine_p);
     
     // State switching function of BananaGameStateMachine (performs the state switch)
-    void BananaGameStateMachine_switchState(struct BananaGameStateMachine* const actualBananaGameStateMachine_p);
+    void BananaGameStateMachine_switchState(
+    		struct BananaGameStateMachine* const actualBananaGameStateMachine_p,
+			const struct AllProcessedInputData* const allProcessedInputData_p
+	);
 
     // Acting function of BananaGameStateMachine
     void BananaGameStateMachine_act(
         struct BananaGameStateMachine* const actualBananaGameStateMachine_p,
-        const struct AllProcessedInputData* const inputData_p,
+        const struct AllProcessedInputData* const allProcessedInputData_p,
         struct DisplayData* const displayData_p    
     );
 

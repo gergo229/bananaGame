@@ -9,7 +9,7 @@
 	#include <stdint.h>		//for precise (bit sized) integer types
 
 /// Constants
-	#define MAX_TOUCH_SLIDER_LOGICAL_VALUE 7 	//the maximum integer value of the logical touch slider position
+	#define TOUCH_SLIDER_MAX_LOGICAL_VALUE 7 	//the maximum integer value of the logical touch slider position
 												//(it's fixed from the game)
 
 /// Types

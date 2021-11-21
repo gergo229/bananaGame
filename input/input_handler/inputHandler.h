@@ -23,7 +23,7 @@
 		// Default/initilazation value of the AllPorcessedInputs struct
 		#define ALL_PROCESSED_INPUT_DATA_DEFAULT { \
 			.joystickPosition = JOYSTICK_DEFAULT, \
-			.buttonState = NOTPRESSED, \
+			.buttonState = BUTTON_NOTPRESSED, \
 			.touchSliderState = 0 \
 		};
 
