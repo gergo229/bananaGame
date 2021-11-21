@@ -32,47 +32,40 @@ void displayData(const struct DisplayData* const displayData){
 		lowerCharSegments[displayData->gamePlay.bucketPosUpper].BUCKET_POS_UPPER_LEFT_SEGMENT = 1;//setting segments of upper bucket
 		lowerCharSegments[displayData->gamePlay.bucketPosUpper].BUCKET_POS_UPPER_RIGHT_SEGMENT = 1;
 		for(int i = 0; i < BANANA_MATRIX_WIDTH; i++){											//iterating through banana matrix
-			if(displayData->gamePlay.bananaMatrix[0][i] == 1)
-				lowerCharSegments[i].BANANA_POS_TOP = displayData->gamePlay.bananaMatrix[0][i];
-			if(displayData->gamePlay.bananaMatrix[1][i] == 1)
-				lowerCharSegments[i].BANANA_POS_MIDDLE = 1;
-			if(displayData->gamePlay.bananaMatrix[2][i] == 1)
-				lowerCharSegments[i].BANANA_POS_BOTTOM = 1;
+			//if(displayData->gamePlay.bananaMatrix.matrix[0][i] == 1)
+				lowerCharSegments[i].BANANA_POS_TOP = displayData->gamePlay.bananaMatrix.matrix[0][i];
+			//if(displayData->gamePlay.bananaMatrix.matrix[1][i] == 1)
+				lowerCharSegments[i].BANANA_POS_MIDDLE = displayData->gamePlay.bananaMatrix.matrix[1][i];
+			//if(displayData->gamePlay.bananaMatrix.matrix[2][i] == 1)
+				lowerCharSegments[i].BANANA_POS_BOTTOM = displayData->gamePlay.bananaMatrix.matrix[2][i];
 		}
 		SegmentLCD_LowerSegments(&lowerCharSegments);			//update lower segments of lcd with the initialized variable
 	}
 }
 
-// Constructor is needed, if not all position data is set, only the active ones
-struct DisplayData* constructDisplayData(){
-	struct DisplayData* displayData = calloc(1, sizeof(struct DisplayData));
-	displayData->gamePlay.bucketPosLower = IS_NOT_SET;
-	displayData->gamePlay.bucketPosUpper = IS_NOT_SET;
-
-	return displayData;
+void InitializeDisplayData(struct DisplayData* const displayData_p){
+	struct DisplayData displayData = {.gamePlay.bucketPosLower = IS_NOT_SET, .gamePlay.bucketPosLower = IS_NOT_SET, \
+			.difficulty.isActive = 0, .gamePlay.isActive = 0, .points.isActive = 0, .text.isActive = 0};
+	*displayData_p = displayData;
 }
 
-// Destructor for displayData
-void destructDisplayData(struct DisplayData* displayData){
-	free(displayData);
-}
 
 /// Setter functions of DisplayData structure
 
 	// Set the difficulty of the DisplayData
-	void DisplayData_setDifficulty(struct DisplayData* const displayData_p, const uint8_t difficulty) {
+	void DisplayData_setDifficulty(struct DisplayData* const displayData_p, const float difficulty) {
 
 		// Sign the field as an active one
 		displayData_p->difficulty.isActive = true;
 
 		// Copy the data fields
-		displayData_p->difficulty.difficulty = difficulty;
+		displayData_p->difficulty.difficulty = (uint8_t)(difficulty * MAX_DIFFICULTY);
 	}
 
 	// Set the GamePlay of the DisplayData
 	void DisplayData_setGamePlay(
 		struct DisplayData* const displayData_p,
-		const uint8_t* const bananaMatrix,
+		const struct BananaMatrix* const bananaMatrix,
 		const uint8_t bucketPosLower,
 		const uint8_t bucketPosUpper
 	) {
@@ -83,7 +76,7 @@ void destructDisplayData(struct DisplayData* displayData){
 		// Copy the data fields
 		for (uint8_t rowNumber = 0; rowNumber < BANANA_MATRIX_HEIGHT; rowNumber++)
 			for (uint8_t coloumnNumber = 0; coloumnNumber < BANANA_MATRIX_WIDTH; coloumnNumber++)
-				displayData_p->gamePlay.bananaMatrix[rowNumber][coloumnNumber] = bananaMatrix[rowNumber][coloumnNumber];
+				displayData_p->gamePlay.bananaMatrix.matrix[rowNumber][coloumnNumber] = bananaMatrix->matrix[rowNumber][coloumnNumber];
 		displayData_p->gamePlay.bucketPosLower = bucketPosLower;
 		displayData_p->gamePlay.bucketPosUpper = bucketPosUpper;
 	}
@@ -99,7 +92,7 @@ void destructDisplayData(struct DisplayData* displayData){
 		displayData_p->points.max = max;
 	}
 
-	// Set the Text of the DisplayData
+	// Set the Text of the DisplayData (passed parameter "text" needs to consist of 7 char-s)
 	void DisplayData_setText(struct DisplayData* const displayData_p, const char* const text) {
 
 		// Sign the field as an active one
