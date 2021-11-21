@@ -42,7 +42,7 @@
 		const struct AllProcessedInputData* const inputData_p
 	);
 
-	// Initialize setup state's data with default values
+	// Initialize finish state's data with default values
 	void BananaGameStateMachine_FinishState_Data_initialize(
 		struct BananaGameStateMachine_FinishState_Data* const bananaGameStateMachine_FinishState_Data_p
 	);
