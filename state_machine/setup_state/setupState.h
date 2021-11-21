@@ -43,4 +43,9 @@
 		struct BananaGameStateMachine_SetupState_Data* const bananaGameStateMachine_SetupState_Data_p
 	);
 
+	// Get the pointer to the setup state's data structure
+	struct BananaGameStateMachine_SetupState_Data* BananaGameStateMachine_SetupState_getDataStructure(
+		struct BananaGameStateMachine* const currentBananaGameStateMachine_p
+	);
+
 #endif 	/* SETUP_STATE_H_ */

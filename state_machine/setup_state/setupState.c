@@ -21,20 +21,13 @@
 	// Device headers
 		#include "em_device.h"		//for device specific registers (here the SysTick is used)
 
-/// Utility functions' declarations
-
-	// Get the pointer to the current state's data structure
-	struct BananaGameStateMachine_SetupState_Data* BananaGameStateMachine_SetupState_getDataStructure(
-		struct BananaGameStateMachine* const currentBananaGameStateMachine_p
-	);
-
 /// Main functions
 
 	// Action, done at stepping into the state
 	void BananaGameStateMachine_SetupState_stepInAction(
 		struct BananaGameStateMachine* const currentBananaGameStateMachine_p
 	) {
-		// Get the pointer to the current state's data structure
+		// Get the pointer to the current (setup) state's data structure
 		struct BananaGameStateMachine_SetupState_Data* const currentData_p =
 			BananaGameStateMachine_SetupState_getDataStructure(currentBananaGameStateMachine_p);
 
@@ -52,7 +45,7 @@
 		struct DisplayData* const displayData_p
 	) {
 
-		// Get the pointer to the current state's data structure
+		// Get the pointer to the current (setup) state's data structure
 		struct BananaGameStateMachine_SetupState_Data* const currentData_p =
 			BananaGameStateMachine_SetupState_getDataStructure(currentBananaGameStateMachine_p);
 
@@ -60,7 +53,9 @@
 			const enum BananaGameStateMachine_StateName currentState =
 				currentBananaGameStateMachine_p->currentState;	//get the current state
 			if (currentData_p->isFirstInThisState)	//if in first cycle
-				currentBananaGameStateMachine_p->states[currentState].stepInAction();		//call the current's step in function
+				currentBananaGameStateMachine_p->states[currentState].stepInAction(
+					currentBananaGameStateMachine_p
+				);		//call the current's step in function
 
 
 		// Set the difficulty according to the input (touch slider)
@@ -87,20 +82,16 @@
 		if (inputData_p->buttonState == BUTTON_ISPRESSED) {		//if the start game button is pressed
 
 			// Calculate random seed of the game (from elapsed time in setup state)
-				const enum BananaGameStateMachine_StateName currentState = bananaGameStateMachine_p->currentState;	//the current state
-				const struct BananaGameStateMachine_SetupState_Data* const currentData_p =
-						(const struct BananaGameStateMachine_SetupState_Data*)bananaGameStateMachine_p->states[currentState].data;	 //current state's data
-				const uint32_t startTimeAtThisState = currentData_p->timeAtThisState;		//time at the start of the state (stored before)
-				currentData_p->timeAtThisState = SysTick->VAL - startTimeAtThisState;		//difference is the elapsed timem, store it
+				struct BananaGameStateMachine_SetupState_Data* const currentSetupData_p =
+						(struct BananaGameStateMachine_SetupState_Data*)bananaGameStateMachine_p->states[STATE_SETUP].data;	 //current state's data
+				const uint32_t startTimeAtThisState = currentSetupData_p->timeAtThisState;		//time at the start of the state (stored before)
+				currentSetupData_p->timeAtThisState = SysTick->VAL - startTimeAtThisState;		//difference is the elapsed timem, store it
 
 			// Step into next (game) state
-				((struct BananaGameStateMachine_StateGame_Data*)
+				((struct BananaGameStateMachine_GameState_Data*)
 					(bananaGameStateMachine_p->states[STATE_GAME].data))
 					->isFirstInThisState = true;		//sign that this will be a step in to this state
 				bananaGameStateMachine_p->currentState = STATE_GAME;
-		}
-		else {		//if the exit condition doesn't met
-			bananaGameStateMachine_p->currentState = STATE_SETUP;		//stay in the setup state
 		}
 	}
 
@@ -115,18 +106,14 @@
 		bananaGameStateMachine_SetupState_Data_p->isFirstInThisState = true;
 	}
 
-/// Utility functions' definitions
-
-	// Get the pointer to the current state's data structure
+	// Get the pointer to the setup state's data structure
 	struct BananaGameStateMachine_SetupState_Data* BananaGameStateMachine_SetupState_getDataStructure(
 		struct BananaGameStateMachine* const currentBananaGameStateMachine_p
 	) {
-		// Get the current state
-		const enum BananaGameStateMachine_StateName currentState = currentBananaGameStateMachine_p->currentState;
 
 		// Get the current state's structure
 		struct BananaGameStateMachine_State* const currentBananaGameStateMachine_SetupState_p =
-				&currentBananaGameStateMachine_p->states[currentState];
+				&currentBananaGameStateMachine_p->states[STATE_SETUP];
 
 		// Get the pointer to the current state's data structure
 		return (struct BananaGameStateMachine_SetupState_Data*)(currentBananaGameStateMachine_SetupState_p->data);

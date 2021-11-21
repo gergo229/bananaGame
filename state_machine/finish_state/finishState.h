@@ -8,7 +8,9 @@
 
 /// Includes
 	#include "../banana_game_state_machine/bananaGameStateMachine.h"	//for the eternal state machine
+
 	#include <stdint.h>		//for precise sized integers
+	#include <stdbool.h>	//for boolean type
 
 /// Types
 
@@ -20,6 +22,9 @@
 				uint8_t resultScore;	//the score of the user in the previous game
 				uint8_t overallScore;		//the overall score in the previous game
 			}gameScore;
+
+			// Flag, to show, if it's the first cycle in this state
+			bool isFirstInThisState;
 		};
 
 /// Functions
@@ -45,6 +50,11 @@
 	// Initialize finish state's data with default values
 	void BananaGameStateMachine_FinishState_Data_initialize(
 		struct BananaGameStateMachine_FinishState_Data* const bananaGameStateMachine_FinishState_Data_p
+	);
+
+	// Get the pointer to the finish state's data structure
+	struct BananaGameStateMachine_FinishState_Data* BananaGameStateMachine_FinishState_getDataStructure(
+		struct BananaGameStateMachine* const currentBananaGameStateMachine_p
 	);
 
 #endif /* FINISH_STATE_H_*/
