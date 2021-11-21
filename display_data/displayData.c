@@ -3,6 +3,7 @@
 #include "segmentlcd.h"
 #include "displayData.h"
 #include "../../segmentlcd/segmentlcd_individual.h"
+#include <stdbool.h>
 
 // Update lcd based on data in displayData variable
 void displayData(const struct DisplayData* const displayData){
@@ -56,4 +57,55 @@ void destructDisplayData(struct DisplayData* displayData){
 	free(displayData);
 }
 
+/// Setter functions of DisplayData structure
 
+	// Set the difficulty of the DisplayData
+	void DisplayData_setDifficulty(struct DisplayData* const displayData_p, const uint8_t difficulty) {
+
+		// Sign the field as an active one
+		displayData_p->difficulty.isActive = true;
+
+		// Copy the data fields
+		displayData_p->difficulty.difficulty = difficulty;
+	}
+
+	// Set the GamePlay of the DisplayData
+	void DisplayData_setGamePlay(
+		struct DisplayData* const displayData_p,
+		const uint8_t* const bananaMatrix,
+		const uint8_t bucketPosLower,
+		const uint8_t bucketPosUpper
+	) {
+
+		// Sign the field as an active one
+		displayData_p->gamePlay.isActive = true;
+
+		// Copy the data fields
+		for (uint8_t rowNumber = 0; rowNumber < BANANA_MATRIX_HEIGHT; rowNumber++)
+			for (uint8_t coloumnNumber = 0; coloumnNumber < BANANA_MATRIX_WIDTH; coloumnNumber++)
+				displayData_p->gamePlay.bananaMatrix[rowNumber][coloumnNumber] = bananaMatrix[rowNumber][coloumnNumber];
+		displayData_p->gamePlay.bucketPosLower = bucketPosLower;
+		displayData_p->gamePlay.bucketPosUpper = bucketPosUpper;
+	}
+
+	// Set the Points of the DisplayData
+	void DisplayData_setPoints(struct DisplayData* const displayData_p, const uint8_t max, const uint8_t current) {
+
+		// Sign the field as an active one
+		displayData_p->points.isActive = true;
+
+		// Copy the data fields
+		displayData_p->points.current = current;
+		displayData_p->points.max = max;
+	}
+
+	// Set the Text of the DisplayData
+	void DisplayData_setText(struct DisplayData* const displayData_p, const char* const text) {
+
+		// Sign the field as an active one
+		displayData_p->text.isActive = true;
+
+		// Copy the data fields
+		for (uint8_t charNumber = 0; charNumber < LOWER_SEGMENT_WIDTH; charNumber++)
+			displayData_p->text.text[charNumber] = text[charNumber];
+	}
