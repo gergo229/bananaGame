@@ -3,24 +3,24 @@
 */
 
 /// Includes
-    #include "input/input_handler/inputHandler.h"   //for handling the physical inputs
+	#include "config/config.h"	//for eternal configuration
+	#include "input/input_handler/inputHandler.h"   //for handling the physical inputs
     #include "state_machine/banana_game_state_machine/bananaGameStateMachine.h"         //for the state machine of the program
     #include "display_data/displayData.h"       //for displayment of the output data
-	#include "config/config.h"	//for eternal configuration
 
 // Global variables
-	struct InputITFlags inputITFlags;	//global structure, to indicate changes in input states
+	volatile struct InputITFlags inputITFlags;	//global structure, to indicate changes in input states
 
 /// The main function
 
 int main (void) {
 
-	// Config everything
+	// Configure every peripheral
 	configAll();
 
     // Create the statemachine
-        struct BananaGameStateMachine bananagameStateMachine;
-        BananaGameStateMachine_construct(&bananagameStateMachine);
+        struct BananaGameStateMachine bananaGameStateMachine;
+        BananaGameStateMachine_construct(&bananaGameStateMachine);
 
     // Create the input data structure
     struct AllProcessedInputData allProcessedInputData = ALL_PROCESSED_INPUT_DATA_DEFAULT;
@@ -36,13 +36,13 @@ int main (void) {
 
         // State machine cycle
             BananaGameStateMachine_act(
-                &bananagameStateMachine,
+                &bananaGameStateMachine,
                 (const struct AllProcessedInputData*) &allProcessedInputData,
                 &displayData
             );
             BananaGameStateMachine_switchState(
-            		&bananagameStateMachine,
-					(const struct AllProcessedInputData*) &allProcessedInputData
+				&bananaGameStateMachine,
+				(const struct AllProcessedInputData*) &allProcessedInputData
 			);
 
         // Display the output data
@@ -52,7 +52,7 @@ int main (void) {
     // here the program won't come... - while(1)
 
     // Destruct the statemachine
-    BananaGameStateMachine_destruct(&bananagameStateMachine);
+    BananaGameStateMachine_destruct(&bananaGameStateMachine);
 
     return 0;
 }

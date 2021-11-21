@@ -19,26 +19,26 @@
 /// Functions
 
 	// Action, done at stepping into the state
-	void BananaGameStateMachine_SetupState_StepInAction(
-			struct BananaGameStateMachine_State* const actualBananaGameStateMachine_SetupState_p
+	void BananaGameStateMachine_SetupState_stepInAction(
+			struct BananaGameStateMachine* const actualBananaGameStateMachine_p
 	);
 
 	// Action function of the setup state
-	void BananaGameStateMachine_SetupState_Action(
-			struct BananaGameStateMachine_State* const actualBananaGameStateMachine_SetupState_p,
+	void BananaGameStateMachine_SetupState_action(
+			struct BananaGameStateMachine* const actualBananaGameStateMachine_p,
 			const struct AllProcessedInputData* const inputData_p,
 			struct DisplayData* const displayData_p
 	);
 
 	// State switching function of the setup state
-	enum BananaGameStateMachine_StateName BananaGameStateMachine_SetupState_NewState(
+	void BananaGameStateMachine_SetupState_newState(
 		struct BananaGameStateMachine* const bananaGameStateMachine_p,
 		const struct AllProcessedInputData* const inputData_p
 	);
 
 	// Initialize SetupState_Data with default values
 	void BananaGameStateMachine_SetupState_Data_initialize(
-			struct BananaGameStateMachine_SetupState_Data* const bananaGameStateMachine_SetupState_Data_p
-			);
+		struct BananaGameStateMachine_SetupState_Data* const bananaGameStateMachine_SetupState_Data_p
+	);
 
 #endif 	/* SETUP_STATE_H_ */
