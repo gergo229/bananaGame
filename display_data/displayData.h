@@ -50,3 +50,14 @@ struct DisplayData{
 void displayData(const struct DisplayData* const displayData);
 struct DisplayData* constructDisplayData();
 void destructDisplayData(struct DisplayData* displayData);
+
+// Setter functions of DisplayData structure
+void DisplayData_setDifficulty(struct DisplayData* const displayData_p, const uint8_t difficulty);
+void DisplayData_setGamePlay(
+	struct DisplayData* const displayData_p,
+	const uint8_t* const bananaMatrix,
+	const uint8_t bucketPosLower,
+	const uint8_t bucketPosUpper
+);
+void DisplayData_setPoints(struct DisplayData* const displayData_p, const uint8_t max, const uint8_t current);
+void DisplayData_setText(struct DisplayData* const displayData_p, const char* const text);
