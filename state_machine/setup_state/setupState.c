@@ -48,6 +48,13 @@
 		struct BananaGameStateMachine_SetupState_Data* const actualData_p =
 			BananaGameStateMachine_SetupState_getDataStructure(actualBananaGameStateMachine_p);
 
+		// Call the step in function, if needed (in first cycle)
+			const enum BananaGameStateMachine_StateName actualState =
+				actualBananaGameStateMachine_p->actualState;	//get the actual state
+			if (actualData_p->isFirstInThisState)	//if in first cycle
+				actualBananaGameStateMachine_p->states[actualState].stepInAction();		//call the actual's step in function
+
+
 		// Set the difficulty according to the input (touch slider)
 		float convertConstant = (float)DIFFICULTY_MAX / (float)TOUCH_SLIDER_MAX_LOGICAL_VALUE;
 		if(inputData_p->touchSliderState != TOUCH_SLIDER_NOT_TOUCHED)	//if touch slider is active
@@ -85,7 +92,7 @@
 			bananaGameStateMachine_p->actualState = STATE_GAME;
 		}
 		else {		//if the exit condition doesn't met
-			bananaGameStateMachine_p->actualState = STATE_GAME;		//stay in the setup state
+			bananaGameStateMachine_p->actualState = STATE_SETUP;		//stay in the setup state
 		}
 	}
 
@@ -93,8 +100,13 @@
 	void BananaGameStateMachine_SetupState_Data_initialize(
 			struct BananaGameStateMachine_SetupState_Data* const bananaGameStateMachine_SetupState_Data_p
 			){
+		// Set the difficulty to default
 		bananaGameStateMachine_SetupState_Data_p->difficulty = DIFFICULTY_DEFAULT;
+
+		// Sign, that this will be a first cycle in the state
+		bananaGameStateMachine_SetupState_Data_p->isFirstInThisState = true;
 	}
+
 /// Utility functions' definitions
 
 	// Get the pointer to the actual state's data structure

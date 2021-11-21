@@ -7,6 +7,7 @@
 
 /// Includes
 	#include "../banana_game_state_machine/bananaGameStateMachine.h"	//for the eternal state machine
+	#include <stdbool.h>	//for boolean type
 
 /// Types
 
@@ -14,6 +15,7 @@
 	struct BananaGameStateMachine_SetupState_Data {
 		uint32_t timeAtStartOfState;	//initial time in this state (needed to the seed of later random generation)
 		uint8_t difficulty;		//the chosen difficulty of the game (with touch slider, from 0 to DIFFICULTY_MAX
+		bool isFirstInThisState;	//shows, if it's the first cycle in this state
 	};
 
 /// Functions
