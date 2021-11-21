@@ -32,12 +32,12 @@ void displayData(const struct DisplayData* const displayData){
 		lowerCharSegments[displayData->gamePlay.bucketPosUpper].BUCKET_POS_UPPER_LEFT_SEGMENT = 1;//setting segments of upper bucket
 		lowerCharSegments[displayData->gamePlay.bucketPosUpper].BUCKET_POS_UPPER_RIGHT_SEGMENT = 1;
 		for(int i = 0; i < BANANA_MATRIX_WIDTH; i++){											//iterating through banana matrix
-			//if(displayData->gamePlay.bananaMatrix.matrix[0][i] == 1)
-				lowerCharSegments[i].BANANA_POS_TOP = displayData->gamePlay.bananaMatrix.matrix[0][i];
-			//if(displayData->gamePlay.bananaMatrix.matrix[1][i] == 1)
-				lowerCharSegments[i].BANANA_POS_MIDDLE = displayData->gamePlay.bananaMatrix.matrix[1][i];
-			//if(displayData->gamePlay.bananaMatrix.matrix[2][i] == 1)
-				lowerCharSegments[i].BANANA_POS_BOTTOM = displayData->gamePlay.bananaMatrix.matrix[2][i];
+			if(displayData->gamePlay.bananaMatrix.matrix[0][i] == 1)
+				lowerCharSegments[i].BANANA_POS_TOP = 1;//displayData->gamePlay.bananaMatrix.matrix[0][i];
+			if(displayData->gamePlay.bananaMatrix.matrix[1][i] == 1)
+				lowerCharSegments[i].BANANA_POS_MIDDLE = 1;//displayData->gamePlay.bananaMatrix.matrix[1][i];
+			if(displayData->gamePlay.bananaMatrix.matrix[2][i] == 1)
+				lowerCharSegments[i].BANANA_POS_BOTTOM = 1;//displayData->gamePlay.bananaMatrix.matrix[2][i];
 		}
 		SegmentLCD_LowerSegments(&lowerCharSegments);			//update lower segments of lcd with the initialized variable
 	}
