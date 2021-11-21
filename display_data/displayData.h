@@ -7,7 +7,7 @@
 #define _isActive_ uint8_t isActive
 
 #define IS_NOT_SET -1
-#define MAX_DIFFICULTY 8
+#define MAX_DIFFICULTY 7
 
 // Defining lcd dimensions
 #define LOWER_SEGMENT_WIDTH 7

@@ -19,8 +19,11 @@ void DisplayData_displayData(const struct DisplayData* const displayData){
 
 	// convert max and current point into one 4 digit number and print to lcd
 	if(displayData->difficulty.isActive){
-		for(int i = 0; i < displayData->difficulty.difficulty; i++)
+		int i;
+		for(i = 0; i < displayData->difficulty.difficulty + 1; i++)
 			SegmentLCD_ARing(i, 1);
+		for(i = displayData->difficulty.difficulty + 1; i < MAX_DIFFICULTY + 1; i++)
+			SegmentLCD_ARing(i, 0);
 	}
 
 	if(displayData->gamePlay.isActive){
@@ -57,7 +60,7 @@ void InitializeDisplayData(struct DisplayData* const displayData_p){
 		displayData_p->difficulty.isActive = true;
 
 		// Copy the data fields
-		displayData_p->difficulty.difficulty = (uint8_t)(difficulty * MAX_DIFFICULTY);
+		displayData_p->difficulty.difficulty = (uint8_t)((difficulty * MAX_DIFFICULTY));
 	}
 
 	// Set the GamePlay of the DisplayData
