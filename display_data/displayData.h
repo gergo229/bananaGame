@@ -1,3 +1,5 @@
+#ifndef DISPLAY_DATA_H_
+#define DISPLAY_DATA_H_
 // Includes
 #include <stdint.h>
 
@@ -50,9 +52,8 @@ struct DisplayData{
 	} text;
 };
 
-void displayData(const struct DisplayData* const displayData);
-struct DisplayData* constructDisplayData();
-void destructDisplayData(struct DisplayData* displayData);
+void DisplayData_displayData(const struct DisplayData* const displayData);
+void InitializeDisplayData(struct DisplayData* const displayData_p);
 
 // Setter functions of DisplayData structure
 void DisplayData_setDifficulty(struct DisplayData* const displayData_p, const float difficulty);
@@ -64,3 +65,5 @@ void DisplayData_setGamePlay(
 );
 void DisplayData_setPoints(struct DisplayData* const displayData_p, const uint8_t max, const uint8_t current);
 void DisplayData_setText(struct DisplayData* const displayData_p, const char* const text);
+
+#endif

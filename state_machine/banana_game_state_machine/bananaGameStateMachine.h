@@ -11,13 +11,15 @@
 		#include "../../input/input_handler/inputHandler.h"      //the input data (this comes from physical inputs)
 		#include <stdint.h>		//for precise sized (with given bits) integers
 
-/// Constants
-	const uint8_t DIFFICULTY_MAX = 100;	//the maximum difficulty level
-	const uint8_t DIFFICULTY_DEFAULT = 30;	//the default difficulty level
+/// Defines
+	#define DIFFICULTY_MAX 100 //the maximum difficulty level
+	#define DIFFICULTY_DEFAULT 30	//the default difficulty level
 
 /// Types
     // Enum for the names of states in BananaGameStateMachine
     enum BananaGameStateMachine_StateName {STATE_SETUP, STATE_GAME, STATE_FINISH};
+
+    struct BananaGameStateMachine; //BananaGameStatmachine_State uses this as a field
 
     // State structure for BananaGameStateMachine
     struct BananaGameStateMachine_State {

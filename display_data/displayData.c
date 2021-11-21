@@ -6,8 +6,8 @@
 #include <stdbool.h>
 
 // Update lcd based on data in displayData variable
-void displayData(const struct DisplayData* const displayData){
-	SegmentLCD_AllOff();										//turn off all segments before update
+void DisplayData_displayData(const struct DisplayData* const displayData){
+
 	if(displayData->text.isActive){								//update lcd with text if property is active
 		SegmentLCD_Write(displayData->text.text);
 	}
@@ -32,17 +32,15 @@ void displayData(const struct DisplayData* const displayData){
 		lowerCharSegments[displayData->gamePlay.bucketPosUpper].BUCKET_POS_UPPER_LEFT_SEGMENT = 1;//setting segments of upper bucket
 		lowerCharSegments[displayData->gamePlay.bucketPosUpper].BUCKET_POS_UPPER_RIGHT_SEGMENT = 1;
 		for(int i = 0; i < BANANA_MATRIX_WIDTH; i++){											//iterating through banana matrix
-			if(displayData->gamePlay.bananaMatrix.matrix[0][i] == 1)
-				lowerCharSegments[i].BANANA_POS_TOP = 1;//displayData->gamePlay.bananaMatrix.matrix[0][i];
-			if(displayData->gamePlay.bananaMatrix.matrix[1][i] == 1)
-				lowerCharSegments[i].BANANA_POS_MIDDLE = 1;//displayData->gamePlay.bananaMatrix.matrix[1][i];
-			if(displayData->gamePlay.bananaMatrix.matrix[2][i] == 1)
-				lowerCharSegments[i].BANANA_POS_BOTTOM = 1;//displayData->gamePlay.bananaMatrix.matrix[2][i];
+				lowerCharSegments[i].BANANA_POS_TOP = displayData->gamePlay.bananaMatrix.matrix[0][i];
+				lowerCharSegments[i].BANANA_POS_MIDDLE = displayData->gamePlay.bananaMatrix.matrix[1][i];
+				lowerCharSegments[i].BANANA_POS_BOTTOM = displayData->gamePlay.bananaMatrix.matrix[2][i];
 		}
-		SegmentLCD_LowerSegments(&lowerCharSegments);			//update lower segments of lcd with the initialized variable
+		SegmentLCD_LowerSegments((SegmentLCD_LowerCharSegments_TypeDef*) &lowerCharSegments);			//update lower segments of lcd with the initialized variable
 	}
 }
 
+// Initialize displayData with nonset values
 void InitializeDisplayData(struct DisplayData* const displayData_p){
 	struct DisplayData displayData = {.gamePlay.bucketPosLower = IS_NOT_SET, .gamePlay.bucketPosLower = IS_NOT_SET, \
 			.difficulty.isActive = 0, .gamePlay.isActive = 0, .points.isActive = 0, .text.isActive = 0};

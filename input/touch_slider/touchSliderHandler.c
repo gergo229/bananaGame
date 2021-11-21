@@ -25,5 +25,6 @@
 			 if (newTouchSliderValue == -1)		//if it's not pressed (value -1 shows that)
 				 return TOUCH_SLIDER_NOT_TOUCHED;
 			 else
-				 return (TouchSliderValue)((float)newTouchSliderValue * mappingConstant);
+				 return (TouchSliderValue)((float)((TOUCH_SLIDER_MAX_INPUT_VALUE - newTouchSliderValue) * mappingConstant));
 	}
+

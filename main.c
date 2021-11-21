@@ -8,9 +8,15 @@
     #include "display_data/displayData.h"       //for displayment of the output data
 	#include "config/config.h"	//for eternal configuration
 
+// Global variables
+	struct InputITFlags inputITFlags;	//global structure, to indicate changes in input states
+
 /// The main function
 
 int main (void) {
+
+	// Config everything
+	configAll();
 
     // Create the statemachine
         struct BananaGameStateMachine bananagameStateMachine;
@@ -40,7 +46,7 @@ int main (void) {
 			);
 
         // Display the output data
-        displayData((const struct DisplayData*) &displayData);
+        DisplayData_displayData((const struct DisplayData*) &displayData);
     }
     
     // here the program won't come... - while(1)
