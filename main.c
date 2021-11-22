@@ -34,19 +34,21 @@ int main (void) {
         // Read inputs
         checkInputsAndProcess(&allProcessedInputData);
 
-        // State machine cycle
-            BananaGameStateMachine_act(
-                &bananaGameStateMachine,
-                (const struct AllProcessedInputData*) &allProcessedInputData,
-                &displayData
-            );
-            BananaGameStateMachine_switchState(
-				&bananaGameStateMachine,
-				(const struct AllProcessedInputData*) &allProcessedInputData
-			);
+        // State machine acting
+		BananaGameStateMachine_act(
+			&bananaGameStateMachine,
+			(const struct AllProcessedInputData*) &allProcessedInputData,
+			&displayData
+		);
 
         // Display the output data
         DisplayData_displayData((const struct DisplayData*) &displayData);
+
+        // State machine state switching
+        BananaGameStateMachine_switchState(
+			&bananaGameStateMachine,
+			(const struct AllProcessedInputData*) &allProcessedInputData
+		);
     }
     
     // here the program won't come... - while(1)

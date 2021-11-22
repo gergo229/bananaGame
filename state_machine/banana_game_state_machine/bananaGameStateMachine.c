@@ -9,8 +9,8 @@
 
     // State specific headers
         #include "../setup_state/setupState.h"
-//        #include "../game_state/gameState.h"
-//        #include "../finish_state/finishState.h"
+        #include "../game_state/gameState.h"
+        #include "../finish_state/finishState.h"
     
     // In-out data headers
         #include "../../display_data/displayData.h"    //the output data (this will be displayed later)
