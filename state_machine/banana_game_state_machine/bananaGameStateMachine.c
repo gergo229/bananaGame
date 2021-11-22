@@ -29,28 +29,28 @@
 
             // Construct states' data (allocate memory for them)
             newBananaGameStateMachine_p->states[STATE_SETUP].data = malloc(sizeof(struct BananaGameStateMachine_SetupState_Data));
-//            newBananaGameStateMachine_p->states[STATE_FINISH].data = malloc(sizeof(struct BananaGameStateMachine_GameState_Data));
-//            newBananaGameStateMachine_p->states[STATE_GAME].data = malloc(sizeof(struct BananaGameStateMachine_FinishState_Data));
+            newBananaGameStateMachine_p->states[STATE_GAME].data = malloc(sizeof(struct BananaGameStateMachine_GameState_Data));
+            newBananaGameStateMachine_p->states[STATE_FINISH].data = malloc(sizeof(struct BananaGameStateMachine_FinishState_Data));
 
             // Initialize data of states (this initialization runs once, at the creation of the state machine)
             BananaGameStateMachine_SetupState_Data_initialize(newBananaGameStateMachine_p->states[STATE_SETUP].data);
-//            BnanaGameStateMachine_GameState_Data_initialize(newBananaGameStateMachine_p->states[STATE_GAME].data);
-//            BananaGameStateMachine_FinishState_Data_initialize(newBananaGameStateMachine_p->states[STATE_FINISH].data);
+            BananaGameStateMachine_GameState_Data_initialize(newBananaGameStateMachine_p->states[STATE_GAME].data);
+            BananaGameStateMachine_FinishState_Data_initialize(newBananaGameStateMachine_p->states[STATE_FINISH].data);
 
             // Set the action function pointers (to functions defined before to the desired work)
             newBananaGameStateMachine_p->states[STATE_SETUP].action = BananaGameStateMachine_SetupState_action;
-//            newBananaGameStateMachine_p->states[STATE_FINISH].action = BananaGameStateMachine_GameState_action;
-//            newBananaGameStateMachine_p->states[STATE_GAME].action = BananaGameStateMachine_FinishState_action;
+            newBananaGameStateMachine_p->states[STATE_GAME].action = BananaGameStateMachine_GameState_action;
+            newBananaGameStateMachine_p->states[STATE_FINISH].action = BananaGameStateMachine_FinishState_action;
 
             // Set the step in action function pointers (to functions defined before to the desired work)
 			newBananaGameStateMachine_p->states[STATE_SETUP].stepInAction = BananaGameStateMachine_SetupState_stepInAction;
-//			newBananaGameStateMachine_p->states[STATE_FINISH].stepInAction = BananaGameStateMachine_GameState_stepInAction;
-//			newBananaGameStateMachine_p->states[STATE_GAME].stepInAction = BananaGameStateMachine_FinishState_stepInAction;
+			newBananaGameStateMachine_p->states[STATE_GAME].stepInAction = BananaGameStateMachine_GameState_stepInAction;
+			newBananaGameStateMachine_p->states[STATE_FINISH].stepInAction = BananaGameStateMachine_FinishState_stepInAction;
 
             // Set the switching function pointers (to functions defined before to the desired work)
             newBananaGameStateMachine_p->states[STATE_SETUP].newState = BananaGameStateMachine_SetupState_newState;
-//            newBananaGameStateMachine_p->states[STATE_FINISH].newState = BananaGameStateMachine_GameState_newState;
-//            newBananaGameStateMachine_p->states[STATE_GAME].newState = BananaGameStateMachine_FinishState_newState;
+            newBananaGameStateMachine_p->states[STATE_GAME].newState = BananaGameStateMachine_GameState_newState;
+            newBananaGameStateMachine_p->states[STATE_FINISH].newState = BananaGameStateMachine_FinishState_newState;
         }
 
         // Destructor of the BananaGameStateMachine
@@ -86,7 +86,7 @@
             	//Call the current state's action function
                 	enum BananaGameStateMachine_StateName currentState = currentBananaGameStateMachine_p->currentState;
                 	currentBananaGameStateMachine_p->states[currentState].action(
-                			&currentBananaGameStateMachine_p->states[currentState],
+                			currentBananaGameStateMachine_p,
 							allProcessedInputData_p,
 							displayData_p
                 	);

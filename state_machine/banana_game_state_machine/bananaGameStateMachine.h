@@ -34,7 +34,7 @@
 
     	// The action to do when in the state
         void (*action)(
-        		struct BananaGameStateMachine_State* const currentBananaGameStateMachine_p,
+        		struct BananaGameStateMachine* const currentBananaGameStateMachine_p,
                 const struct AllProcessedInputData* const inputData_p, 
                 struct DisplayData* const displayData_p
         );
