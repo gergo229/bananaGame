@@ -7,14 +7,47 @@
 #define GAME_STATE_H_
 
 /// Includes
+	#include "gameLogic.h"		//for logic operation of the game
+
 	#include "../banana_game_state_machine/bananaGameStateMachine.h"	//for the eternal state machine
+
 	#include <stdint.h>		//for precise sized integers
+	#include <stdbool.h>	//for boolean type
 
 /// Types
 
 	// Game state's data structure
 		struct BananaGameStateMachine_GameState_Data {
 
+			// Bananas of the game
+				struct Banana{
+					enum State{RIPING, FALLING, NONEXISTENT} state;
+					uint16_t timer;
+					struct Position{
+						uint8_t x;
+						uint8_t y;
+					}position;
+				}banana[NUMBER_OF_BANANAS];
+
+			// Bucket of the game
+				struct Bucket{
+					uint16_t timer;
+					uint8_t x;
+					uint8_t previousInput;
+				}bucket[NUMBER_OF_CONTROLLERS];
+
+			// Score of the game
+				struct Score {
+					uint8_t maxPoints;
+					uint8_t currentPoints;
+				}score;
+
+			// Difficulty settings of the game
+				uint8_t difficulty;
+				uint8_t nonExsistTime;
+
+			// First cycle showing flag of the state
+			bool isFirstInThisState;
 		};
 
 /// Functions
