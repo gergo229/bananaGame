@@ -19,7 +19,11 @@
 		#define DIFFICULTY_DEFAULT 30	//the default difficulty level
 
 /// Types
-    // Enum for the names of states in BananaGameStateMachine
+
+	// Declaration of DisplayData structure (defined in DisplayData.h, just needed here because of cross including)
+	struct DisplayData;
+
+	// Enumeration for the names of states in BananaGameStateMachine
     enum BananaGameStateMachine_StateName {STATE_SETUP, STATE_GAME, STATE_FINISH};
 
     // Declaration of BananaGameStatmachine structure

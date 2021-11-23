@@ -1,7 +1,9 @@
 #ifndef DISPLAY_DATA_H_
 #define DISPLAY_DATA_H_
+
 // Includes
 #include <stdint.h>
+#include "../state_machine/game_state/gameLogic.h"		//for getting data from gameLogic
 
 // Defines
 #define _isActive_ uint8_t isActive
@@ -20,6 +22,10 @@
 #define BUCKET_POS_LOWER d
 #define BUCKET_POS_UPPER_LEFT_SEGMENT g
 #define BUCKET_POS_UPPER_RIGHT_SEGMENT m
+
+// Declaring types
+struct Banana;		//defined in gameState.h, just needed here because of cross including
+struct BananaGameStateMachine; 		//defined in bananaGameStateMahcine.h, just needed here because of cross including
 
 // Defining the used part of lcd
 #define BANANA_MATRIX_HEIGHT LOWER_SEGMENT_HEIGHT - 2
@@ -59,7 +65,7 @@ void InitializeDisplayData(struct DisplayData* const displayData_p);
 void DisplayData_setDifficulty(struct DisplayData* const displayData_p, const float difficulty);
 void DisplayData_setGamePlay(
 	struct DisplayData* const displayData_p,
-	const struct BananaMatrix* const bananaMatrix,
+	const struct Banana* const bananas,
 	const uint8_t bucketPosLower,
 	const uint8_t bucketPosUpper
 );

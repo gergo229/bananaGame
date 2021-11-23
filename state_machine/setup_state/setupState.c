@@ -36,6 +36,9 @@
 
 		// Set the state data to default
 		currentData_p->difficulty = DIFFICULTY_DEFAULT;
+
+		// Set variable to tell setupstate whether this is the first time in this state
+		currentData_p->isFirstInThisState = false;
 	}
 
 	// Action function of the setup state
@@ -50,10 +53,8 @@
 			BananaGameStateMachine_SetupState_getDataStructure(currentBananaGameStateMachine_p);
 
 		// Call the step in function, if needed (in first cycle)
-			const enum BananaGameStateMachine_StateName currentState =
-				currentBananaGameStateMachine_p->currentState;	//get the current state
 			if (currentData_p->isFirstInThisState)	//if in first cycle
-				currentBananaGameStateMachine_p->states[currentState].stepInAction(
+				currentBananaGameStateMachine_p->states[STATE_SETUP].stepInAction(
 					currentBananaGameStateMachine_p
 				);		//call the current's step in function
 

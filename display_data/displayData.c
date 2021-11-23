@@ -4,6 +4,7 @@
 #include "displayData.h"
 #include "../../segmentlcd/segmentlcd_individual.h"
 #include <stdbool.h>
+#include "../state_machine/game_state/gameLogic.h"		//for getting data from gameLogic
 
 // Update lcd based on data in displayData variable
 void DisplayData_displayData(const struct DisplayData* const displayData){
@@ -35,9 +36,9 @@ void DisplayData_displayData(const struct DisplayData* const displayData){
 		lowerCharSegments[displayData->gamePlay.bucketPosUpper].BUCKET_POS_UPPER_LEFT_SEGMENT = 1;//setting segments of upper bucket
 		lowerCharSegments[displayData->gamePlay.bucketPosUpper].BUCKET_POS_UPPER_RIGHT_SEGMENT = 1;
 		for(int i = 0; i < BANANA_MATRIX_WIDTH; i++){											//iterating through banana matrix
-				lowerCharSegments[i].BANANA_POS_TOP = displayData->gamePlay.bananaMatrix.matrix[0][i];
+				lowerCharSegments[i].BANANA_POS_TOP = displayData->gamePlay.bananaMatrix.matrix[2][i];
 				lowerCharSegments[i].BANANA_POS_MIDDLE = displayData->gamePlay.bananaMatrix.matrix[1][i];
-				lowerCharSegments[i].BANANA_POS_BOTTOM = displayData->gamePlay.bananaMatrix.matrix[2][i];
+				lowerCharSegments[i].BANANA_POS_BOTTOM = displayData->gamePlay.bananaMatrix.matrix[0][i];
 		}
 		SegmentLCD_LowerSegments((SegmentLCD_LowerCharSegments_TypeDef*) &lowerCharSegments);			//update lower segments of lcd with the initialized variable
 	}
@@ -66,20 +67,33 @@ void InitializeDisplayData(struct DisplayData* const displayData_p){
 	// Set the GamePlay of the DisplayData
 	void DisplayData_setGamePlay(
 		struct DisplayData* const displayData_p,
-		const struct BananaMatrix* const bananaMatrix,
+		const struct Banana* const bananas,
 		const uint8_t bucketPosLower,
 		const uint8_t bucketPosUpper
 	) {
 
 		// Sign the field as an active one
-		displayData_p->gamePlay.isActive = true;
+			displayData_p->gamePlay.isActive = true;
 
-		// Copy the data fields
-		for (uint8_t rowNumber = 0; rowNumber < BANANA_MATRIX_HEIGHT; rowNumber++)
-			for (uint8_t coloumnNumber = 0; coloumnNumber < BANANA_MATRIX_WIDTH; coloumnNumber++)
-				displayData_p->gamePlay.bananaMatrix.matrix[rowNumber][coloumnNumber] = bananaMatrix->matrix[rowNumber][coloumnNumber];
-		displayData_p->gamePlay.bucketPosLower = bucketPosLower;
-		displayData_p->gamePlay.bucketPosUpper = bucketPosUpper;
+		// Generate the banana fields
+
+			// Go through all elements of the banana matrix, and null them
+			// (later only not null elements will be updated)
+				for (unsigned int rowIndex = 0; rowIndex < BANANA_MATRIX_HEIGHT; rowIndex++)
+					for (unsigned int coloumnIndex = 0; coloumnIndex < BANANA_MATRIX_WIDTH; coloumnIndex++)
+						displayData_p->gamePlay.bananaMatrix.matrix[rowIndex][coloumnIndex] = 0;
+
+			for (unsigned int bananaIndex = 0; bananaIndex < NUMBER_OF_BANANAS; bananaIndex++) {	//go through all bananas
+
+				if (bananas[bananaIndex].state != NONEXISTENT) {	//if the banana should be on display (so not in nonexistent state)
+					displayData_p->gamePlay.bananaMatrix.matrix
+						[bananas[bananaIndex].position.y][bananas[bananaIndex].position.x] = 1;		//set the appropriate bit
+				}
+			}
+
+		// Copy bucket fields
+			displayData_p->gamePlay.bucketPosLower = bucketPosLower;
+			displayData_p->gamePlay.bucketPosUpper = bucketPosUpper;
 	}
 
 	// Set the Points of the DisplayData

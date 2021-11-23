@@ -58,7 +58,7 @@
 						.bucket[SLIDER].previousInput = DEFAULT_BUCKET_POSITION,
 						.bucket[JOYSTICK].previousInput = DEFAULT_BUCKET_POSITION,
 						.difficulty = currentSetupDataStructure_p->difficulty,
-						.nonExsistTime = calculateNonExsistTime(currentSetupDataStructure_p)
+						.nonExsistTime = calculateNonExsistTime(currentSetupDataStructure_p->difficulty)
 			};
 			*currentGameData_p = bananaGameStateMachine_GameState_Data;
 
@@ -73,20 +73,16 @@
 			const struct AllProcessedInputData* const inputData_p,
 			struct DisplayData* const displayData_p
 	){
+		// Get game stat's data structure
+			struct BananaGameStateMachine_GameState_Data* const currentGameData_p =
+				BananaGameStateMachine_GameState_getDataStructure(currentBananaGameStateMachine_p);
 
 		// Call step in action, if needed (in first cycle)
-			const struct BananaGameStateMachine_GameState_Data* const
-				currentGameDataStructure_p =
-				BananaGameStateMachine_GameState_getDataStructure(currentBananaGameStateMachine_p);	//get the current data structure
-			if (currentGameDataStructure_p->isFirstInThisState) {	 	//if this is the first cycle
+			if (currentGameData_p->isFirstInThisState) {	 	//if this is the first cycle
 				currentBananaGameStateMachine_p->states[STATE_GAME].stepInAction(
 					currentBananaGameStateMachine_p
 				);	//then call it's step in action
 			}
-
-		// Get game stat's data structure
-			struct BananaGameStateMachine_GameState_Data* const currentGameData_p =
-				BananaGameStateMachine_GameState_getDataStructure(currentBananaGameStateMachine_p);
 
 		// Decrement timers of objects (banana, bucket)
 		Scheduler(inputData_p, currentGameData_p);
@@ -94,6 +90,13 @@
 		// Evaluate object positions
 		EvaluatePositions(inputData_p, currentGameData_p);
 
+		// Generate the display output
+		DisplayData_setGamePlay(
+				displayData_p,
+				(const struct Banana* const) currentGameData_p->banana,
+				(const uint8_t) currentGameData_p->bucket[SLIDER].x,
+				(const uint8_t) currentGameData_p->bucket[JOYSTICK].x
+		);
 	}
 
 	// State switching function of the game state
@@ -109,7 +112,7 @@
 
 		// Check, if any of the exit conditions are met
 		if (
-			//inputData_p->buttonState == BUTTON_ISPRESSED ||		//if restart button is pressed
+			inputData_p->buttonState == BUTTON_ISPRESSED ||		//if restart button is pressed
 			currentGameDataStructure_p->score.maxPoints == SCORE_MAX	//or reached the end of game (so the maximum possible points)
 		) {
 

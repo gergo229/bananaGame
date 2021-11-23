@@ -16,6 +16,10 @@
 
 /// Types
 
+	// Declaration of BananaGameStateMachine (because of cross including)
+	struct BananaGameStateMachine;
+	struct DisplayData;
+
 	// Game state's data structure
 		struct BananaGameStateMachine_GameState_Data {
 

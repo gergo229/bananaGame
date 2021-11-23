@@ -15,7 +15,7 @@
 	#define DEFAULT_BUCKET_POSITION 3
 
 	// Timings
-		#define RIPING_BANANA_TIMER 100000
+		#define RIPING_BANANA_TIMER 100000i
 		#define FALLING_BANANA_TIMER 30000
 		#define BUCKET_POSITION_TIMER 1000
 
@@ -54,6 +54,6 @@
 		struct BananaGameStateMachine_GameState_Data* const bananaGameStateMachine_GameState_Data_p);
 
 	// Calculate difficulty
-	uint8_t calculateNonExsistTime(const struct BananaGameStateMachine_SetupState_Data* const currentSetupDataStructure_p);
+	uint8_t calculateNonExsistTime(const uint8_t difficulty);
 
 #endif /* GAME_LOGIC_H_ */

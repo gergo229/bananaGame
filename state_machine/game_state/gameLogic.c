@@ -15,6 +15,9 @@
 
 	#include <stdlib.h>	 //for random functions
 
+/// Type declarations
+	struct DisplayData;		//defined in displayData.h, needed here for cross including
+
 /// Utility functions' declarations
 
 	// Evaluate positions
@@ -91,9 +94,9 @@
 	}
 
 	// Calculate difficulty
-	uint8_t calculateNonExsistTime(const struct BananaGameStateMachine_SetupState_Data* const currentSetupDataStructure_p) {
+	uint8_t calculateNonExsistTime(const uint8_t difficulty) {
 
-		const uint8_t BANANA_DISPLAYED_NUMBER = BANANA_DISPLAY_MAX * ((currentSetupDataStructure_p->difficulty) / DIFFICULTY_MAX);
+		const uint8_t BANANA_DISPLAYED_NUMBER = BANANA_DISPLAY_MAX * (difficulty / DIFFICULTY_MAX);
 
 		uint8_t temp = RIPING_BANANA_TIMER + FALLING_BANANA_TIMER * (BANANA_MATRIX_HEIGHT - 1);
 		return temp*(NUMBER_OF_BANANAS -	BANANA_DISPLAYED_NUMBER)*temp / BANANA_DISPLAYED_NUMBER;
@@ -154,7 +157,7 @@
 				struct BananaGameStateMachine_GameState_Data* const bananaGameStateMachine_GameState_Data_p,
 				struct Banana* const banana_p
 		){
-			GenerateBanana(banana_p, NONEXISTENT, bananaGameStateMachine_GameState_Data_p);
+			GenerateBanana(banana_p, FALLING, bananaGameStateMachine_GameState_Data_p);
 		}
 
 		// Action of a falling banana
@@ -200,14 +203,14 @@
 			//	case FALLING: timer = FALLING_BANANA_CONSTANT; break;
 			//	case NONEXISTENT: timer = rand() % nonExsistTime * difficulty;
 			//	}
-			SetTimer(banana_p, BANANA, bananaGameStateMachine_GameState_Data_p->difficulty, state, bananaGameStateMachine_GameState_Data_p);
 			uint16_t rndPos = rand() % (BANANA_MATRIX_WIDTH);
 			struct Banana banana = {
 					.state = state,
-					.position = {rndPos, 0}
+					.position = {rndPos, BANANA_MATRIX_HEIGHT}	//put it to the randomized horizontal position, and to the top of the gameplay
 					//.timer = timer
 			};
 			*banana_p = banana;
+			SetTimer(banana_p, BANANA, bananaGameStateMachine_GameState_Data_p->difficulty, state, bananaGameStateMachine_GameState_Data_p);
 		}
 
 	// Input data manipulation
