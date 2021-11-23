@@ -35,6 +35,8 @@
 		//unset the IT's showing flag
 		inputITFlags.isJoystickChanged = false;
 
+		return JOYSTICK_DEFAULT;
+
 		//check, if the joystick is active (activity pin is in active state)
 		if (GPIO_PinInGet(JOYSTICK_ACTIVITY_GPIO_PORT, JOYSTICK_ACTIVITY_GPIO_PIN) == JOYSTICK_ACTIVE) {
 
