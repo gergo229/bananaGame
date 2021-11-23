@@ -86,7 +86,7 @@
             	//Call the current state's action function
                 	enum BananaGameStateMachine_StateName currentState = currentBananaGameStateMachine_p->currentState;
                 	currentBananaGameStateMachine_p->states[currentState].action(
-                			&currentBananaGameStateMachine_p->states[currentState],
+                			currentBananaGameStateMachine_p,
 							allProcessedInputData_p,
 							displayData_p
                 	);
