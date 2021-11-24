@@ -10,11 +10,13 @@
 /// Defines
 
 	// Timing periods (if they are powers of 2, then the calculation is faster)
-	#define TOUCH_SLIDER_READ_PERIOD 8 	//frequency divider for reading the touchslider input
-	#define TOUCH_SLIDER_PROCESS_PERIOD	2	//frequency divider for processing the touchslider input
+		#define TOUCH_SLIDER_READ_PERIOD 8 	//frequency divider for reading the touchslider input
+		#define TOUCH_SLIDER_PROCESS_PERIOD	2	//frequency divider for processing the touchslider input
+		#define GAME_TIME_COUNTER_PERIOD 1  //frequency divider for setting smallest game time
 
 /// Global variables
 	extern struct InputITFlags inputITFlags;		//a global flag structure, which signs, if a change occurred in inputs
+	uint32_t gameTimeCounter;						//counter used by game logic to schedule actions
 
 ///Main functions
 
@@ -35,8 +37,12 @@
 			inputITFlags.isTouchSliderChanged = true;		//sign the changed flag (we can't ensure,
 														//it truly, changed, but we suppose it could)
 
+		// Increase game time counter based on the defined frequency divider
+		if (sysTickCounter % GAME_TIME_COUNTER_PERIOD == 0)
+			gameTimeCounter++;		//step here the counter periodically (scheduler will null it)
+
 		// Step the overall counter
-		sysTickCounter++;	//it may overflow, but that's fine
+		sysTickCounter++;	//it may overflow, but that's fine (it will start from 0 again)
 
 	} /* SysTick_Handler() */
 

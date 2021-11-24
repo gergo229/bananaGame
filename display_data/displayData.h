@@ -72,4 +72,7 @@ void DisplayData_setGamePlay(
 void DisplayData_setPoints(struct DisplayData* const displayData_p, const uint8_t max, const uint8_t current);
 void DisplayData_setText(struct DisplayData* const displayData_p, const char* const text);
 
+// Set all display structures inactive
+void DisplayData_setAllInactive(struct DisplayData* const displayData_p);
+
 #endif

@@ -12,6 +12,9 @@
 	#include <stdbool.h>	//for boolean type
 	#include <stdint.h>		//for precise (bit sized) integer types
 
+/// Global variables
+	extern struct InputITFlags inputITFlags;	//a global flag structure, which signs, if a change occurred in inputs
+
 /// Constants
 
 	// The pin's location, on which data active joystick signal is received
@@ -26,17 +29,12 @@
 
 	//(the 2 pins are set to even pins, to have the same IT route for them)
 
-/// Global variables
-	extern struct InputITFlags inputITFlags;		//a global flag structure, which signs, if a change occurred in inputs
 
 /// Main functions
 
 	// Reads and calculates the new value of joystick's position
 	// (this function is called, if an IT showed, that the joystick input is changed)
 	JoystickPosition readAndCalculateNewJoystickPosition(void) {
-
-		// Unset the IT's showing flag
-			inputITFlags.isJoystickChanged = false;
 
 		// Check, if the joystick is active (activity pin is in active state)
 			if (GPIO_PinInGet(JOYSTICK_ACTIVITY_GPIO_PORT, JOYSTICK_ACTIVITY_GPIO_PIN) == JOYSTICK_ACTIVE) {

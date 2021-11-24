@@ -29,18 +29,21 @@
 		const struct BananaGameStateMachine_GameState_Data* const gameData =
 			BananaGameStateMachine_GameState_getDataStructure(currentBananaGameStateMachine_p);
 
+		// Get the finish state's data structure
+		struct BananaGameStateMachine_FinishState_Data* const currentFinishData =
+			BananaGameStateMachine_FinishState_getDataStructure(currentBananaGameStateMachine_p);
+
+
 		// Read the scores of the game state
 			uint8_t resultScore = gameData->score.currentPoints;		//read out the result score
 			uint8_t overallScore = gameData->score.maxPoints;			//read out the overall score
 
-		//Store the scores inside
-			((struct BananaGameStateMachine_FinishState_Data*)
-				(currentBananaGameStateMachine_p->states[STATE_FINISH].data))
-				->gameScore.resultScore = resultScore;		//store the result score
-			((struct BananaGameStateMachine_FinishState_Data*)
-				(currentBananaGameStateMachine_p->states[STATE_FINISH].data))
-				->gameScore.overallScore = overallScore;		//store the overall score
+		// Store the scores inside
+			currentFinishData->gameScore.resultScore = resultScore;		//store the result score
+			currentFinishData->gameScore.overallScore = overallScore;		//store the overall score
 
+		// Reset the flag, which shows, that this step in function is needed to run
+			currentFinishData->isFirstInThisState = false;
 	}
 
 	// Action function of the finish state
@@ -60,6 +63,9 @@
 				);	//then call it's step in action
 			}
 
+		// Set all data structures inactive
+			DisplayData_setAllInactive(displayData_p);
+
 		// Display the game's score
 			const struct BananaGameStateMachine_FinishState_Data* finishData =
 					(const struct BananaGameStateMachine_FinishState_Data*)
@@ -71,11 +77,12 @@
 			);
 
 		// Display the end game message
-			const char* const endGameMessage = "End of game!";
+			const char* const endGameMessage = "End!";
 			DisplayData_setText(
 				displayData_p,
 				endGameMessage
 			);
+
 	}
 
 	// State switching function of the finish state

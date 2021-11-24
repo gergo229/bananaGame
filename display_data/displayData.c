@@ -5,9 +5,11 @@
 #include "../../segmentlcd/segmentlcd_individual.h"
 #include <stdbool.h>
 #include "../state_machine/game_state/gameLogic.h"		//for getting data from gameLogic
+#include "em_core.h"
 
 // Update lcd based on data in displayData variable
 void DisplayData_displayData(const struct DisplayData* const displayData){
+
 
 	if(displayData->text.isActive){								//update lcd with text if property is active
 		SegmentLCD_Write(displayData->text.text);
@@ -15,7 +17,11 @@ void DisplayData_displayData(const struct DisplayData* const displayData){
 
 	if(displayData->points.isActive){
 		SegmentLCD_Symbol(LCD_SYMBOL_COL10, 1);
-		SegmentLCD_Number((uint16_t) (displayData->points.max) * 100 + (uint16_t)(displayData->points.current));
+		SegmentLCD_Number((uint16_t) (displayData->points.current) * 100 + (uint16_t)(displayData->points.max));
+	}
+	else {
+		SegmentLCD_Symbol(LCD_SYMBOL_COL10, 0);
+		SegmentLCD_NumberOff();
 	}
 
 	// convert max and current point into one 4 digit number and print to lcd
@@ -26,8 +32,13 @@ void DisplayData_displayData(const struct DisplayData* const displayData){
 		for(i = displayData->difficulty.difficulty + 1; i < MAX_DIFFICULTY + 1; i++)
 			SegmentLCD_ARing(i, 0);
 	}
+	else {
+		for(int i = 0; i < MAX_DIFFICULTY + 1; i++)
+			SegmentLCD_ARing(i, 0);
+	}
 
 	if(displayData->gamePlay.isActive){
+
 		SegmentLCD_LowerCharSegments_TypeDef lowerCharSegments[LOWER_SEGMENT_WIDTH];			//this variable stores the data to display
 		for(int i = 0; i < BANANA_MATRIX_WIDTH; i++){											//initializing it's values to 0
 			lowerCharSegments[i].raw = 0;
@@ -41,6 +52,10 @@ void DisplayData_displayData(const struct DisplayData* const displayData){
 				lowerCharSegments[i].BANANA_POS_BOTTOM = displayData->gamePlay.bananaMatrix.matrix[0][i];
 		}
 		SegmentLCD_LowerSegments((SegmentLCD_LowerCharSegments_TypeDef*) &lowerCharSegments);			//update lower segments of lcd with the initialized variable
+	}
+
+	if (displayData->gamePlay.isActive && displayData->text.isActive){
+		SegmentLCD_Write("");
 	}
 }
 
@@ -116,4 +131,12 @@ void InitializeDisplayData(struct DisplayData* const displayData_p){
 		// Copy the data fields
 		for (uint8_t charNumber = 0; charNumber < LOWER_SEGMENT_WIDTH; charNumber++)
 			displayData_p->text.text[charNumber] = text[charNumber];
+	}
+
+	// Set all display structures inactive
+	void DisplayData_setAllInactive(struct DisplayData* const displayData_p){
+		displayData_p->difficulty.isActive = false;
+		displayData_p->gamePlay.isActive = false;
+		displayData_p->points.isActive = false;
+		displayData_p->text.isActive = false;
 	}

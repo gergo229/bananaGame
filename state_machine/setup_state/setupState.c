@@ -65,12 +65,23 @@
 			currentData_p->difficulty = (uint8_t)((float)inputData_p->touchSliderState * convertConstant);
 				//map it into difficulty
 
+
+		// Set all data structures inactive
+		DisplayData_setAllInactive(displayData_p);
+
 		// Create the output display structure
 		InitializeDisplayData(displayData_p);		//initialize it (with inactive fields)
 		DisplayData_setDifficulty(
 				displayData_p,
 				(float)currentData_p->difficulty / (float)DIFFICULTY_MAX		//normalize the difficulty (to be able to display it generally)
 		);	//and write the selected difficulty
+
+		// Display the start game message
+		const char* const startGameMessage = "Start!";
+		DisplayData_setText(
+			displayData_p,
+			startGameMessage
+		);
 
 	}
 

@@ -27,6 +27,10 @@
 
 	#define SCORE_MAX 25	//the maximum number of falling bananas (so the score)
 
+/// Global variables
+
+	extern uint32_t gameTimeCounter;		//counter of game time
+
 /// Main functions
 
 	// Action, done at stepping into game state
@@ -58,13 +62,16 @@
 						.bucket[SLIDER].previousInput = DEFAULT_BUCKET_POSITION,
 						.bucket[JOYSTICK].previousInput = DEFAULT_BUCKET_POSITION,
 						.difficulty = currentSetupDataStructure_p->difficulty,
-						.nonExsistTime = calculateNonExsistTime(currentSetupDataStructure_p->difficulty)
+						.nonExistTime = calculateNonExsistTime(currentSetupDataStructure_p->difficulty)
 			};
 			*currentGameData_p = bananaGameStateMachine_GameState_Data;
 
 		// Generate bananas with nonexistent state
 			for(int columns = 0; columns < NUMBER_OF_BANANAS; columns++)
-				GenerateBanana(&(currentGameData_p->banana[columns]), NONEXISTENT, currentGameData_p);
+				ConvertBanana(&(currentGameData_p->banana[columns]), NONEXISTENT, currentGameData_p->nonExistTime);
+
+		// Reset the game timer (at the beginning of the game, after setup)
+			gameTimeCounter = 0;
 	}
 
 	// Action function of the game state
@@ -91,12 +98,25 @@
 		EvaluatePositions(inputData_p, currentGameData_p);
 
 		// Generate the display output
-		DisplayData_setGamePlay(
+
+
+			// Set all data structures inactive
+			DisplayData_setAllInactive(displayData_p);
+
+			// Display the gameplay
+			DisplayData_setGamePlay(
+					displayData_p,
+					(const struct Banana* const) currentGameData_p->banana,
+					(const uint8_t) currentGameData_p->bucket[SLIDER].x,
+					(const uint8_t) currentGameData_p->bucket[JOYSTICK].x
+			);
+
+			// Display the scores
+			DisplayData_setPoints(
 				displayData_p,
-				(const struct Banana* const) currentGameData_p->banana,
-				(const uint8_t) currentGameData_p->bucket[SLIDER].x,
-				(const uint8_t) currentGameData_p->bucket[JOYSTICK].x
-		);
+				currentGameData_p->score.maxPoints,
+				currentGameData_p->score.currentPoints
+			);
 	}
 
 	// State switching function of the game state

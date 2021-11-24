@@ -26,18 +26,18 @@
 			// Bananas of the game
 				struct Banana{
 					enum State{RIPING, FALLING, NONEXISTENT} state;
-					uint16_t timer;
+					int32_t timer;
 					struct Position{
 						uint8_t x;
-						uint8_t y;
+						int8_t y;
 					}position;
 				}banana[NUMBER_OF_BANANAS];
 
 			// Bucket of the game
 				struct Bucket{
-					uint16_t timer;
+					int32_t timer;
 					uint8_t x;
-					uint8_t previousInput;
+					int8_t previousInput;
 				}bucket[NUMBER_OF_CONTROLLERS];
 
 			// Score of the game
@@ -48,7 +48,7 @@
 
 			// Difficulty settings of the game
 				uint8_t difficulty;
-				uint8_t nonExsistTime;
+				uint32_t nonExistTime;
 
 			// First cycle showing flag of the state
 			bool isFirstInThisState;

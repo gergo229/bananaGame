@@ -8,16 +8,17 @@
 /// Constants
 
 	// Object numbers
-		#define NUMBER_OF_BANANAS 14
+		#define NUMBER_OF_BANANAS 50
 		#define NUMBER_OF_CONTROLLERS 2
-		#define BANANA_DISPLAY_MAX 10
+
+		#define BANANA_DISPLAY_MAX 14
 
 	#define DEFAULT_BUCKET_POSITION 3
 
-	// Timings
-		#define RIPING_BANANA_TIMER 100i
-		#define FALLING_BANANA_TIMER 80
-		#define BUCKET_POSITION_TIMER 8
+	// Timings (1 unit means 0.07ms)
+		#define RIPING_BANANA_TIMER 3000
+		#define FALLING_BANANA_TIMER 1000
+		#define BUCKET_POSITION_TIMER 100
 
 
 /// Includes
@@ -50,10 +51,9 @@
 	);
 
 	// Generate a banana structure
-	void GenerateBanana(struct Banana* const banana_p, enum State state,
-		struct BananaGameStateMachine_GameState_Data* const bananaGameStateMachine_GameState_Data_p);
+	void ConvertBanana(struct Banana* const banana_p, enum State state, uint32_t nonExistTime);
 
 	// Calculate difficulty
-	uint8_t calculateNonExsistTime(const uint8_t difficulty);
+	uint32_t calculateNonExsistTime(const uint8_t difficulty);
 
 #endif /* GAME_LOGIC_H_ */
