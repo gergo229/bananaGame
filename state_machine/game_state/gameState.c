@@ -112,11 +112,11 @@
 
 		// Check, if any of the exit conditions are met
 		if (
-			inputData_p->buttonState == BUTTON_ISPRESSED ||		//if restart button is pressed
+			inputData_p->buttonState == BUTTON_ISACTIVE ||		//if restart button is pressed
 			currentGameDataStructure_p->score.maxPoints == SCORE_MAX	//or reached the end of game (so the maximum possible points)
 		) {
 
-			// Change to setup state
+			// Change to finish state
 
 				//show, that this will be the first there
 				((struct BananaGameStateMachine_SetupState_Data*)

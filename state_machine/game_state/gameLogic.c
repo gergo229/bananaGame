@@ -96,10 +96,10 @@
 	// Calculate difficulty
 	uint8_t calculateNonExsistTime(const uint8_t difficulty) {
 
-		const uint8_t BANANA_DISPLAYED_NUMBER = BANANA_DISPLAY_MAX * (difficulty / DIFFICULTY_MAX);
+		const uint8_t BANANA_DISPLAYED_NUMBER = (uint8_t)((float)BANANA_DISPLAY_MAX * ((float)difficulty / (float)DIFFICULTY_MAX));
 
 		uint8_t temp = RIPING_BANANA_TIMER + FALLING_BANANA_TIMER * (BANANA_MATRIX_HEIGHT - 1);
-		return temp*(NUMBER_OF_BANANAS -	BANANA_DISPLAYED_NUMBER)*temp / BANANA_DISPLAYED_NUMBER;
+		return temp*(NUMBER_OF_BANANAS - BANANA_DISPLAYED_NUMBER) / BANANA_DISPLAYED_NUMBER;
 
 		/*
 		 *	NUMBER_OF_BANANAS - NONEXSISTANT / (RIPING + FALLING*(BANANAMATRIX_HEIGHT-1) + NONEXSISTANT) * NUMBER_OF_BANANAS = DISPLAYED_BANANAS
@@ -219,10 +219,13 @@
 		uint8_t ConvertJoystick(JoystickPosition inPosition) {
 				if (inPosition == JOYSTICK_LEFT)
 					return 0;
-				else return TOUCH_SLIDER_LOGICAL_VALUE_MAX;
+				else if (inPosition == JOYSTICK_RIGHT)
+					return TOUCH_SLIDER_LOGICAL_VALUE_MAX;
+				else
+					return TOUCH_SLIDER_NOT_TOUCHED;
 			}
 
-		// Read the input (both from joystik and touch slier)
+		// Read the input (both from joystick and touch slier)
 		uint8_t GetCurrentInputValue(const struct AllProcessedInputData* const inputData_p, enum BucketType inputType) {
 			if (inputType == JOYSTICK)
 				return ConvertJoystick(inputData_p->joystickPosition);
@@ -244,19 +247,25 @@
 				const struct AllProcessedInputData* const inputData_p,
 				struct BananaGameStateMachine_GameState_Data* const bananaGameStateMachine_GameState_Data_p
 		){
-			for(enum DataType dataType = 0; dataType < NUMBER_OF_CONTROLLERS; dataType++){
-				struct Bucket* const bucket_p = &bananaGameStateMachine_GameState_Data_p->bucket[dataType];
+			for(enum BucketType bucketType = 0; bucketType < NUMBER_OF_CONTROLLERS; bucketType++){
+				struct Bucket* const bucket_p = &bananaGameStateMachine_GameState_Data_p->bucket[bucketType];
 
-				uint8_t convertedInputValue = GetCurrentInputValue(inputData_p, (enum DataType)dataType);
+				int8_t convertedInputValue = GetCurrentInputValue(inputData_p, (enum BucketType)bucketType);
 
-				if(
-					((bucket_p->previousInput > bucket_p->x) && (convertedInputValue > bucket_p->x)) ||
-					((bucket_p->previousInput < bucket_p->x) && (convertedInputValue < bucket_p->x))
-				)
-					bucket_p->timer--;
+				bool inputIsBigger = (bucket_p->previousInput >= bucket_p->x) && (convertedInputValue > bucket_p->x);
+				bool inputIsLower = (bucket_p->previousInput <= bucket_p->x) && (convertedInputValue < bucket_p->x);
+				bool inputIsActive = convertedInputValue != TOUCH_SLIDER_NOT_TOUCHED;
+
+				// If the input of the bucket is active
+				if (inputIsActive && (inputIsBigger || inputIsLower)) {
+						bucket_p->timer--;
+				}
 				else {
 					bucket_p->timer = BUCKET_POSITION_TIMER;
 				}
+
+				// Set the previous value to the current one after changes
+				bucket_p->previousInput = convertedInputValue;
 			}
 		}
 

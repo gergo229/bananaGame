@@ -20,10 +20,10 @@
 		enum ButtonIsPressed buttonState;	//state of the button
 		TouchSliderValue touchSliderState;	//state of the touch slider
 	};
-		// Default/initilazation value of the AllPorcessedInputs struct
+		// Default/initialization value of the AllPorcessedInputs structure
 		#define ALL_PROCESSED_INPUT_DATA_DEFAULT { \
 			.joystickPosition = JOYSTICK_DEFAULT, \
-			.buttonState = BUTTON_NOTPRESSED, \
+			.buttonState = BUTTON_ISNOTACTIVE, \
 			.touchSliderState = 0 \
 		};
 

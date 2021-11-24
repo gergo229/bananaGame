@@ -80,7 +80,7 @@
 		const struct AllProcessedInputData* const inputData_p
 	) {
 		// Check, if exit condition is met or not
-		if (inputData_p->buttonState == BUTTON_ISPRESSED) {		//if the start game button is pressed
+		if (inputData_p->buttonState == BUTTON_ISACTIVE) {		//if the start game button is pressed
 
 			// Calculate random seed of the game (from elapsed time in setup state)
 				struct BananaGameStateMachine_SetupState_Data* const currentSetupData_p =

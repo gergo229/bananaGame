@@ -84,7 +84,7 @@
 		const struct AllProcessedInputData* const inputData_p
 	){
 		// If meet the exit condition
-		if (inputData_p->buttonState == BUTTON_ISPRESSED) {		//if the restart button is pressed
+		if (inputData_p->buttonState == BUTTON_ISACTIVE) {		//if the restart button is pressed
 
 			// Change to setup state
 

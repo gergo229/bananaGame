@@ -7,14 +7,10 @@
 #define BUTTON_HANDLER_H_
 
 /// Defines
-	enum ButtonIsPressed {BUTTON_ISPRESSED = 0, BUTTON_NOTPRESSED = 1};		//type for describing the status of a button
-		//it's a pulled up input, so in pressed state it's logical value is 0
-		//(and this is represented in the enumeration as well)
+	enum ButtonIsPressed {BUTTON_ISACTIVE, BUTTON_ISNOTACTIVE};		//type for describing the status of a button
+		//the button considers to be active, at the moment of pressing it down
 
 /// Functions
-
-	// Reads the new state of a button, and processes it
-	enum ButtonIsPressed readAndCalculateNewButtonState(void);
 
 	// Configure the GPIO ports, used by the button to an input with edge triggered ITs
 	void configButtonGPIO(void);

@@ -25,18 +25,6 @@
 
 /// Main functions
 
-	// Reads the new state of a button, and processes it
-	// (it called after an IT showed, that it's changed)
-	enum ButtonIsPressed readAndCalculateNewButtonState(void) {
-
-		// Clear the IT flag
-		inputITFlags.isButtonChanged = false;
-
-		// Return with the read input
-		return GPIO_PinInGet(BUTTON_GPIO_PORT, BUTTON_GPIO_PIN);
-			//the enumeration is aligned with the input value (see definition's comment)
-	}
-
 	// Configure the GPIO ports, used by the button to an input with edge triggered ITs
 	void configButtonGPIO(void) {
 
@@ -44,14 +32,18 @@
 		GPIO_PinModeSet(BUTTON_GPIO_PORT, BUTTON_GPIO_PIN, gpioModeInput, 0);
 
 		// Set IT to come, as the button input pin changes
-		//(so enable its IT, and set them to be sensitive to both rising and falling edges)
-		GPIO_IntConfig(BUTTON_GPIO_PORT, BUTTON_GPIO_PIN, 1, 1, 1);
+		//(so enable its IT, and set them to be sensitive to rising edges)
+		GPIO_IntConfig(BUTTON_GPIO_PORT, BUTTON_GPIO_PIN, 1, 0, 1);
 
 	}
+
+	uint32_t volatile cntr = 0;
 
 	// Handles the IT, which comes in case of a button state change
 	//(only this input is an odd GPIO pin, so this IT handler is restricted to this functionality)
 	void GPIO_ODD_IRQHandler(void) {
+
+		cntr ++;
 
 		//Context saving/switching is automatic
 

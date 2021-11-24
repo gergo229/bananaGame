@@ -12,6 +12,8 @@
 		#include "../joystick/joystickHandler.h"		//joystick handling functions
 		#include "../touch_slider/touchSliderHandler.h"		//touch slider handling functions
 
+	#include <stdbool.h>		//for boolean type
+
 /// Global variables
 	extern struct InputITFlags inputITFlags;		//a global flag structure, which signs, if a change occurred in inputs
 
@@ -25,11 +27,13 @@
 			if (inputITFlags.isJoystickChanged)
 				allProcessedInputs_p->joystickPosition = readAndCalculateNewJoystickPosition();
 
-			// If button's state changed, then calculate the new value of it
-			if (inputITFlags.isButtonChanged && allProcessedInputs_p->buttonState == BUTTON_NOTPRESSED)
-				allProcessedInputs_p->buttonState = readAndCalculateNewButtonState();
+			// If button has a rising edge the flag is being set to 1, and the state of the button is set to 1
+			if (inputITFlags.isButtonChanged) {
+				allProcessedInputs_p->buttonState = BUTTON_ISACTIVE;	//then set it as active
+				inputITFlags.isButtonChanged = false;	//and show, that the change is recorded
+			}
 			else
-				allProcessedInputs_p->buttonState = BUTTON_NOTPRESSED;
+				allProcessedInputs_p->buttonState = BUTTON_ISNOTACTIVE;		//else set it as inactive
 
 			// If touch slider's state changed, then calculate the new value of it
 			if (inputITFlags.isTouchSliderChanged)
