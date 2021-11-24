@@ -33,7 +33,6 @@
 		struct BananaGameStateMachine_FinishState_Data* const currentFinishData =
 			BananaGameStateMachine_FinishState_getDataStructure(currentBananaGameStateMachine_p);
 
-
 		// Read the scores of the game state
 			uint8_t resultScore = gameData->score.currentPoints;		//read out the result score
 			uint8_t overallScore = gameData->score.maxPoints;			//read out the overall score

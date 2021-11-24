@@ -54,7 +54,7 @@ void DisplayData_displayData(const struct DisplayData* const displayData){
 		SegmentLCD_LowerSegments((SegmentLCD_LowerCharSegments_TypeDef*) &lowerCharSegments);			//update lower segments of lcd with the initialized variable
 	}
 
-	if (displayData->gamePlay.isActive && displayData->text.isActive){
+	if (!displayData->gamePlay.isActive && !displayData->text.isActive){
 		SegmentLCD_Write("");
 	}
 }

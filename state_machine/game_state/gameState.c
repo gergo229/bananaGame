@@ -6,6 +6,7 @@
 
 	// State handling
 		#include "gameState.h"	//own header
+		#include "../finish_state/finishState.h"	//for accessing finish state
 		#include "../game_state/gameState.h"	//for accessing game state
 		#include "../setup_state/setupState.h"		//for accessing setup state
 		#include "../banana_game_state_machine/bananaGameStateMachine.h"		//for the state machine
@@ -139,7 +140,7 @@
 			// Change to finish state
 
 				//show, that this will be the first there
-				((struct BananaGameStateMachine_SetupState_Data*)
+				((struct BananaGameStateMachine_FinishState_Data*)
 					(currentBananaGameStateMachine_p->states[STATE_FINISH].data))
 					->isFirstInThisState = true;
 
