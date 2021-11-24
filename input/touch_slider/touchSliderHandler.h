@@ -1,5 +1,5 @@
 /*
- *	This is the header for handling high level the touch slider input
+ *	Header for handling high level the touch slider input
  */
 
 #ifndef TOUCH_SLIDER_HANDLER_H_
@@ -9,16 +9,15 @@
 	#include <stdint.h>		//for precise (bit sized) integer types
 
 /// Constants
-	#define TOUCH_SLIDER_MAX_LOGICAL_VALUE 6 	//the maximum integer value of the logical touch slider position
-												//(it's fixed from the game)
+	#define TOUCH_SLIDER_LOGICAL_VALUE_MAX 6 	//the maximum integer value of the logical touch slider position
+		//(it's fixed from the game; values starts from 0)
 
 /// Types
 
 	// Type for representing the touch slider's slide state
-	typedef int8_t TouchSliderValue;
+		typedef int8_t TouchSliderValue;
 		#define TOUCH_SLIDER_NOT_TOUCHED -1		//-1 shows it isn't pressed
-		//values from 0 to MAX_TOUCH_SLIDER_LOGICAL_VALUE
-	    //- see define in touchSliderHandler.c)
+			//values from 0 to TOUCH_SLIDER_LOGICAL_VALUE_MAX are real ones
 
 /// Functions
 

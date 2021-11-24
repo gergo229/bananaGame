@@ -7,6 +7,7 @@
 
 /// Includes
 	#include "../../../../joystickPosition.h"	//an external header, containing joystick's data
+		//needed to the other board (on which the joystick is), so it's out of project's folders
 
 /// Functions
 

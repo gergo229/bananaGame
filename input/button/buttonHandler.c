@@ -3,19 +3,22 @@
  */
 
 /// Includes
-	#include "buttonHandler.h"	//own header (contains the ButtonIsPressed type)
-	#include "em_gpio.h"		//for handling GPIO with EmLib
-	#include <stdbool.h>		//for boolean type
+
 	#include "../input_handler/inputHandler.h"	//general input handler (contains the inputITFlags type)
+	#include "buttonHandler.h"	//own header (contains the ButtonIsPressed type)
+
+	#include "em_gpio.h"		//for handling GPIO with EmLib
+
 	#include <stdint.h>		//for precise (bit sized) integer types
+	#include <stdbool.h>		//for boolean type
 
 /// Constants
 
 	// Defining the button's GPIO pin
 		const GPIO_Port_TypeDef BUTTON_GPIO_PORT = gpioPortB;	//on port B
 		const uint32_t BUTTON_GPIO_PIN  = 9;		//on pin 9
-		//PB9 is connected to UIF_PB0 on STK3700 board (with pull-up resistor)
-		//and it's grouped to odd IT group
+			//PB9 is connected to UIF_PB0 on STK3700 board (with pull-up resistor)
+			//and it's grouped to odd IT group
 
 /// Global variables
 	extern struct InputITFlags inputITFlags;	//global structure, to indicate changes in input states
@@ -30,7 +33,8 @@
 		inputITFlags.isButtonChanged = false;
 
 		// Return with the read input
-		return GPIO_PinInGet(BUTTON_GPIO_PORT, BUTTON_GPIO_PIN);		//the enum is aligned with the input value (see definition's comment)
+		return GPIO_PinInGet(BUTTON_GPIO_PORT, BUTTON_GPIO_PIN);
+			//the enumeration is aligned with the input value (see definition's comment)
 	}
 
 	// Configure the GPIO ports, used by the button to an input with edge triggered ITs

@@ -219,7 +219,7 @@
 		uint8_t ConvertJoystick(JoystickPosition inPosition) {
 				if (inPosition == JOYSTICK_LEFT)
 					return 0;
-				else return TOUCH_SLIDER_MAX_LOGICAL_VALUE;
+				else return TOUCH_SLIDER_LOGICAL_VALUE_MAX;
 			}
 
 		// Read the input (both from joystik and touch slier)

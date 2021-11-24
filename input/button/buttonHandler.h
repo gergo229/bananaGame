@@ -8,7 +8,9 @@
 
 /// Defines
 	enum ButtonIsPressed {BUTTON_ISPRESSED = 0, BUTTON_NOTPRESSED = 1};		//type for describing the status of a button
-																//it's a pulled-up input, so in unpressed state the input level is 1
+		//it's a pulled up input, so in pressed state it's logical value is 0
+		//(and this is represented in the enumeration as well)
+
 /// Functions
 
 	// Reads the new state of a button, and processes it

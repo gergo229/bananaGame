@@ -60,7 +60,7 @@
 
 
 		// Set the difficulty according to the input (touch slider)
-		float convertConstant = (float)DIFFICULTY_MAX / (float)TOUCH_SLIDER_MAX_LOGICAL_VALUE;
+		float convertConstant = (float)DIFFICULTY_MAX / (float)TOUCH_SLIDER_LOGICAL_VALUE_MAX;
 		if(inputData_p->touchSliderState != TOUCH_SLIDER_NOT_TOUCHED)	//if touch slider is active
 			currentData_p->difficulty = (uint8_t)((float)inputData_p->touchSliderState * convertConstant);
 				//map it into difficulty

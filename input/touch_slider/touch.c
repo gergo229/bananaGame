@@ -1,3 +1,7 @@
+/*
+ *	Source for handling the touch slider at low level
+ *	This file is from here: https://github.com/hans-jorg/efm32gg-stk3700-gcc-cmsis
+ */
 
 /**
  * @file    touch.c
@@ -16,12 +20,12 @@
  *   UIF_TOUCH3  |  PC11         |    ACMP1/CH3
  */
 
+/// Includes
+	#include "touch.h"
 
-#include "touch.h"
-
-#include <stdint.h>
-#include "em_device.h"
-//#include "gpio.h"
+	#include <stdint.h>
+	#include "em_device.h"
+	//#include "gpio.h"
 
 /*
  * Hardware configuration
